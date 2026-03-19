@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Details | Three Gals</title>
+  <link rel="stylesheet" href="../three-gals-site/styles.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <span>Three Gals · Burgers, fries, and fresh green flavor</span>
+      <span>Demo ordering experience for class project</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">3G</span>
+        <span>Three Gals</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="details.html">Details</a>
+        <a data-nav href="order.html">Order</a>
+        <a data-nav class="bag-pill" href="bag.html">Bag (<span data-bag-count>0</span>)</a>
+        <a data-nav href="checkout.html">Checkout</a>
+        <a data-nav href="confirmation.html">Confirmation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-shell">
+      <span class="eyebrow">Item details</span>
+      <h1>Learn what makes each item special.</h1>
+      <p>The details page is designed to pull one product by ID from a JSON dataset and show a larger, more descriptive view.</p>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div id="detail-view" class="grid-12 detail-layout"></div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container small">
+      <span>© 2026 Three Gals. Built with HTML, CSS, and JavaScript.</span>
+      <span><a href="order.html">Start an order</a> · <a href="details.html">View item details</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

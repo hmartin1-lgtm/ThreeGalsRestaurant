@@ -1,11 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>three Gals Restaurant</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | Three Gals</title>
+  <link rel="stylesheet" href="../three-gals-site/styles.css">
 </head>
 <body>
-    <h1>three gals restaurant</h1>
+  <div class="topbar">
+    <div class="container">
+      <span>Three Gals · Burgers, fries, and fresh green flavor</span>
+      <span>Demo ordering experience for class project</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">3G</span>
+        <span>Three Gals</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="details.html">Details</a>
+        <a data-nav href="order.html">Order</a>
+        <a data-nav class="bag-pill" href="bag.html">Bag (<span data-bag-count>0</span>)</a>
+        <a data-nav href="checkout.html">Checkout</a>
+        <a data-nav href="confirmation.html">Confirmation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+<section class="hero">
+  <div class="container grid-12">
+    <div class="span-6 hero-copy">
+      <span class="eyebrow">Three Gals Signature Burgers</span>
+      <h1>Fresh burgers with a bold green twist.</h1>
+      <p>Three Gals is a modern burger restaurant concept with a white-and-green identity, fast ordering flow, and a clean 12-column layout. The design nods to classic burger chains while keeping its own softer, fresher look.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="order.html">Build your order</a>
+        <a class="btn btn-secondary" href="#featured">See featured picks</a>
+      </div>
+      <div class="order-progress">
+        <span class="step active">1. Browse</span>
+        <span class="step">2. Bag</span>
+        <span class="step">3. Checkout</span>
+        <span class="step">4. Confirm</span>
+      </div>
+    </div>
+    <div class="span-6 hero-card">
+      <div class="hero-visual">
+        <div class="hero-badge">
+          <strong>Green sauce, crisp fries, fast pickup.</strong>
+          <span class="muted">A menu designed for a class demo with JSON-ready product cards.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid-12">
+      <article class="span-4 card feature-card">
+        <div class="icon-dot">01</div>
+        <h3>12-column grid</h3>
+        <p>Every major section uses a consistent, evenly spaced grid to match your project requirement.</p>
+      </article>
+      <article class="span-4 card feature-card">
+        <div class="icon-dot">02</div>
+        <h3>JSON-friendly menu</h3>
+        <p>The order and detail pages can read menu items from an external JSON source instead of hard-coded HTML.</p>
+      </article>
+      <article class="span-4 card feature-card">
+        <div class="icon-dot">03</div>
+        <h3>Full demo flow</h3>
+        <p>Home, details, order, bag, checkout, and confirmation are all connected with local storage for a realistic front-end experience.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="featured" class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <h2>Featured menu</h2>
+        <p>Sample items shown below. You can replace them with database-backed JSON later.</p>
+      </div>
+      <a class="btn btn-outline" href="order.html">View full menu</a>
+    </div>
+    <div id="featured-menu" class="menu-grid"></div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container small">
+      <span>© 2026 Three Gals. Built with HTML, CSS, and JavaScript.</span>
+      <span><a href="order.html">Start an order</a> · <a href="details.html">View item details</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>

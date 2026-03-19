@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Three Gals</title>
+  <link rel="stylesheet" href="../three-gals-site/styles.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <span>Three Gals · Burgers, fries, and fresh green flavor</span>
+      <span>Demo ordering experience for class project</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">3G</span>
+        <span>Three Gals</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="details.html">Details</a>
+        <a data-nav href="order.html">Order</a>
+        <a data-nav class="bag-pill" href="bag.html">Bag (<span data-bag-count>0</span>)</a>
+        <a data-nav href="checkout.html">Checkout</a>
+        <a data-nav href="confirmation.html">Confirmation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-shell">
+      <span class="eyebrow">Checkout</span>
+      <h1>Finish the order details.</h1>
+      <p>This demo checkout collects name and pickup preferences only. No real payment is processed.</p>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container grid-12 checkout-layout">
+    <div class="span-7 card checkout-form">
+      <form id="checkout-form" class="form-grid">
+        <div>
+          <label class="label" for="firstName">First name</label>
+          <input class="input" id="firstName" name="firstName" required>
+        </div>
+        <div>
+          <label class="label" for="lastName">Last name</label>
+          <input class="input" id="lastName" name="lastName" required>
+        </div>
+        <div>
+          <label class="label" for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" required>
+        </div>
+        <div>
+          <label class="label" for="phone">Phone</label>
+          <input class="input" id="phone" name="phone" type="tel" required>
+        </div>
+        <div class="full">
+          <label class="label" for="pickupTime">Pickup time</label>
+          <select class="select" id="pickupTime" name="pickupTime">
+            <option>ASAP</option>
+            <option>In 15 minutes</option>
+            <option>In 30 minutes</option>
+            <option>In 45 minutes</option>
+          </select>
+        </div>
+        <div class="full">
+          <label class="label" for="notes">Order notes</label>
+          <textarea class="input" id="notes" name="notes" rows="4" placeholder="Extra pickles, no onion, etc."></textarea>
+        </div>
+        <div class="full notice">This is a class demo checkout. You can later connect this page to your own backend and payment flow.</div>
+        <div class="full">
+          <button class="btn btn-primary" type="submit">Place demo order</button>
+        </div>
+      </form>
+    </div>
+    <aside class="span-5 card summary-card" id="checkout-summary"></aside>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container small">
+      <span>© 2026 Three Gals. Built with HTML, CSS, and JavaScript.</span>
+      <span><a href="order.html">Start an order</a> · <a href="details.html">View item details</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
