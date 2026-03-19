@@ -1,0 +1,8 @@
+Requirements:
+Home Page (Syler)
+Nav Bar (group)(home, menu, order)
+Menu ()
+Order ()
+Cart ()
+Checkout / Confirmation
+Foot Nav (group)
