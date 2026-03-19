@@ -7,6 +7,34 @@ Cart ()
 Checkout / Confirmation
 Foot Nav (group)
 
-
-
 Color: Green
+
+Drinks:
+  Flavor
+  Size
+Dogs:
+  Cheese
+Burgers:
+  Double
+  Single
+  Cheese
+Topings:
+  Onion
+  Bacon
+Sides:
+  Potato
+  Sweet Potato
+Size of Sides:
+  Small
+  Medium
+  Large
+Size of Drink:
+  Small
+  Medium
+  Large
+Drink Flavor:
+  Lime
+  Cherry
+Shake Flavor
+  Mint
+  Chocolate
