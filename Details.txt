@@ -1,10 +1,10 @@
 Requirements:
 Home Page (Syler)
 Nav Bar (group)(home, menu, order)
-Menu ()
-Order ()
-Cart ()
-Checkout / Confirmation
+Menu (Ava)
+Order (HANNAH)
+Cart (Gideon)
+Checkout / Confirmation (Andrew)
 Foot Nav (group)
 
 Color: Green
