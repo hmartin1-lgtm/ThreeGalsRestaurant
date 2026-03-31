@@ -16,9 +16,31 @@
     "price": 9.75,
     "category": "burgers",
     "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+    "shortDescription": "Vegetarian patty, letuce, kale, spinach, jalapenos, lemon aioli.",
+    "description": "A fresh vegetarian option straight from the garden with a bright finish.",
+    "details": ["Vegetarian patty", "Letuce, kale, spinach", "Jalapenos", "Lemon aioli"],
+    "tags": ["Vegetarian", "Fresh"]
+  },
+  {
+    "id": "veg-gal",
+    "name": "Vegitaidan Burger",
+    "price": 9.75,
+    "category": "burgers",
+    "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
     "shortDescription": "Vegetarian patty, avocado, spinach, pickled onion, lemon aioli.",
     "description": "A fresh vegetarian option with creamy avocado and a bright finish.",
     "details": ["Vegetarian patty", "Avocado & spinach", "Pickled red onion", "Lemon aioli"],
     "tags": ["Vegetarian", "Fresh"]
+  },
+  {
+    "id": "death-gal",
+    "name": "Death by Burger",
+    "price": 23.75,
+    "category": "burgers",
+    "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+    "shortDescription": "Six smash patties on 8 inch buns, avocado, lettuce, tomato, onion rings, pickles, bacon, and ketchup.",
+    "description": "More meal than most people can survive. Includes triple batch of hot-honey fries.",
+    "details": ["Six smash patties", "Avocado, lettuce, tomato", "Onion rings, pickles, bacon", "Lemon aioli"],
+    "tags": ["Carnavore", "Fresh"]
   }
 ]
