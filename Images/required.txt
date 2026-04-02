@@ -4,10 +4,10 @@ Burgers
     veg
     death Burgers
     bacon Burgers
-    pb + j
+    pb + java
 
 Shakes
-    Vanilla
+    Drewnilla
     Chocolate
     Mint
 
@@ -15,11 +15,14 @@ Toppings
     Sprinkles
     Chocolate Syrup
     jaleopenos
+    mayo
+    mustard
 
 Fries
     Regular
     Cheesy
     Cajun
+    guaco
 
 Hot dogs
     plain
@@ -30,4 +33,6 @@ Drinks
     Water
     Soda
     Specialty
-    
+    Chillin dillon (green cucumber lemonade)
+
+
