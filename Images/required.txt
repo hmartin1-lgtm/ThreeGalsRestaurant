@@ -14,11 +14,20 @@ Shakes
 Toppings
     Sprinkles
     Chocolate Syrup
+    jaleopenos
 
 Fries
     Regular
     Cheesy
     Cajun
 
+Hot dogs
+    plain
+    chili dogs
+    jalepeno 
 
-
+Drinks
+    Water
+    Soda
+    Specialty
+    
