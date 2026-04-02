@@ -1,4 +1,4 @@
-Burgers x 6?
+Burgers
     plain
     cheese
     veg
@@ -6,4 +6,19 @@ Burgers x 6?
     bacon Burgers
     pb + j
 
-Shakes x 6
+Shakes
+    Vanilla
+    Chocolate
+    Mint
+
+Toppings
+    Sprinkles
+    Chocolate Syrup
+
+Fries
+    Regular
+    Cheesy
+    Cajun
+
+
+
