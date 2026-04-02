@@ -1,0 +1,38 @@
+Burgers
+    plain
+    cheese
+    veg
+    death Burgers
+    bacon Burgers
+    pb + java
+
+Shakes
+    Drewnilla
+    Chocolate
+    Mint
+
+Toppings
+    Sprinkles
+    Chocolate Syrup
+    jaleopenos
+    mayo
+    mustard
+
+Fries
+    Regular
+    Cheesy
+    Cajun
+    guaco
+
+Hot dogs
+    plain
+    chili dogs
+    jalepeno 
+
+Drinks
+    Water
+    Soda
+    Specialty
+    Chillin dillon (green cucumber lemonade)
+
+
