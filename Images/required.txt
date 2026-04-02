@@ -3,7 +3,7 @@ Burgers
     Classic Hannah Burgher 
     vegiadian Burger 
     Leviathan Death Burgers
-    bacon Burgers
+    bacon Beach Burgers
     pb + java Burger 
 
 Shakes
@@ -18,8 +18,8 @@ Toppings
     (look up rest from Five Guys) -- may want only Words for now
 
 Fries
-    Regular
-    Cheesy
+    Regular 
+    Cheesy (The Seth Specailty Fries)
     Guaco Gideon Fries 
     Cajun
     Syler Sweet Potato
