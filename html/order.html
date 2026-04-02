@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmation | Three Gals</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Order | Three Gals</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <div class="topbar">
@@ -36,15 +36,28 @@
 <section class="page-hero">
   <div class="container">
     <div class="page-hero-shell">
-      <span class="eyebrow">Order confirmed</span>
-      <h1>Your Three Gals order is in.</h1>
-      <p>The confirmation page summarizes the latest stored order and works as the end of the front-end ordering flow.</p>
+      <span class="eyebrow">Order online</span>
+      <h1>Choose burgers, sides, and drinks.</h1>
+      <p>This page loads product cards from JSON, supports searching and category filtering, and lets users add items to the bag.</p>
     </div>
   </div>
 </section>
 <section class="section">
   <div class="container">
-    <div id="confirmation-card" class="card summary-card"></div>
+    <div class="filters">
+      <div style="flex:2 1 280px;">
+        <input id="menu-search" class="input" type="search" placeholder="Search burgers, fries, drinks...">
+      </div>
+      <div style="flex:1 1 220px;">
+        <select id="menu-category" class="select">
+          <option value="all">All categories</option>
+          <option value="burgers">Burgers</option>
+          <option value="sides">Sides</option>
+          <option value="drinks">Drinks</option>
+        </select>
+      </div>
+    </div>
+    <div id="order-menu" class="menu-grid"></div>
   </div>
 </section>
 
