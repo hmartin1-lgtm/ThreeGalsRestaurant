@@ -1,33 +1,38 @@
 Burgers
-    plain
-    cheese
-    veg
-    death Burgers
+    Plain Jenna Burger 
+    Classic Hannah Burgher 
+    vegiadian Burger 
+    Leviathan Death Burgers
     bacon Burgers
-    pb + j
+    pb + java Burger 
 
 Shakes
-    Vanilla
+    Drew-nilla
     Chocolate
     Mint
 
 Toppings
-    Sprinkles
-    Chocolate Syrup
+    Mayo
+    Musturd
     jaleopenos
+    (look up rest from Five Guys) -- may want only Words for now
 
 Fries
     Regular
     Cheesy
+    Guaco Gideon Fries 
     Cajun
+    Syler Sweet Potato
 
 Hot dogs
-    plain
-    chili dogs
-    jalepeno 
+    Classic Dog
+    chili Dylan dogs
+    jalepeno Dog
 
 Drinks
     Water
     Soda
     Specialty
+        Cucumber Mint Lemonade
     
+
