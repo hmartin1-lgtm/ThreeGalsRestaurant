@@ -2,7 +2,7 @@ Burgers
     plain
     cheese
     veg
-    death Burgers
+    leviathan death burger
     bacon Burgers
     pb + java
 
@@ -26,13 +26,13 @@ Fries
 
 Hot dogs
     plain
-    chili dogs
+    chili dogs (chillon dillon)
     jalepeno 
 
 Drinks
     Water
     Soda
     Specialty
-    Chillin dillon (green cucumber lemonade)
+    green cucumber lemonade
 
 
