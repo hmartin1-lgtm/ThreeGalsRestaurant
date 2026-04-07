@@ -74,7 +74,7 @@ const STORAGE_KEYS = {
 
 async function loadMenu() {
   try {
-    const response = await fetch('./data/menu.json');
+    const response = await fetch('../data/menu.json');
     if (!response.ok) throw new Error('No external menu found');
     return await response.json();
   } catch (error) {
@@ -119,7 +119,7 @@ function cartTotals() {
 function renderMenuCards(items, container) {
   container.innerHTML = items.map(item => `
     <article class="card menu-card">
-      <img src="${item.image}" alt="${item.name}">
+      <img src="../Images/${item.image}" alt="${item.name}">
       <div class="menu-card-body">
         <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
         <h3>${item.name}</h3>
@@ -192,7 +192,7 @@ async function initDetails() {
 
   target.innerHTML = `
     <div class="span-7 card detail-media">
-      <img src="${item.image}" alt="${item.name}">
+      <img src="../Images/${item.image}" alt="${item.name}">
     </div>
     <div class="span-5 card detail-panel">
       <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
@@ -241,7 +241,7 @@ function initBag() {
 
     cartContainer.innerHTML = cart.map(item => `
       <article class="cart-item">
-        <img src="${item.image}" alt="${item.name}">
+        <img src="../Images/${item.image}" alt="${item.name}">
         <div>
           <h3>${item.name}</h3>
           <p class="muted">${money(item.price)} each</p>
