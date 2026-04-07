@@ -42,5 +42,17 @@
     "description": "More meal than most people can survive. Includes triple batch of hot-honey fries.",
     "details": ["Six smash patties", "Avocado, lettuce, tomato", "Onion rings, pickles, bacon", "Hot-honey fries"],
     "tags": ["Carnavore", "Fresh"]
+  },
+  {
+    "id": "Regular-Fries",
+    "name": "House Fries",
+    "price": 3.75,
+    "category": "Fries",
+    "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+    "shortDescription": "House-cut, Crispy, Perfectly Seasoned.",
+    "description": "Crispy, golden house-cut fries with a perfectly seasoned crunch and fluffy interior—served hot and fresh, just the way comfort food should be at Three Gals.",
+    "details": ["Six smash patties", "Avocado, lettuce, tomato", "Onion rings, pickles, bacon", "Hot-honey fries"],
+    "tags": ["Carnavore", "Fresh"]
   }
 ]
+
