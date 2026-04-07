@@ -53,6 +53,28 @@
     "description": "Crispy, golden house-cut fries with a perfectly seasoned crunch and fluffy interior—served hot and fresh, just the way comfort food should be at Three Gals.",
     "details": ["Six smash patties", "Avocado, lettuce, tomato", "Onion rings, pickles, bacon", "Hot-honey fries"],
     "tags": ["Carnavore", "Fresh"]
+  },
+  {
+    "id": "green-lemonade",
+    "name": "Green Lemonade",
+    "price": 5.5,
+    "category": "drinks",
+    "image": "../Greenlemonade.png",
+    "shortDescription": "A refreshing blend of green tea, lemon, and natural sweeteners.",
+    "description": "A revitalizing drink that combines the freshness of green tea with the zesty kick of lemon.",
+    "details": ["Green tea", "Lemon", "Natural sweeteners"],
+    "tags": ["Fresh", "House Favorite"]
+  },
+  {
+    "id": "hot-dog",
+    "name": "OG Hot Dog",
+    "price": 1.75,
+    "category": "hot-dogs",
+    "image": "../hotdog.png",
+    "shortDescription": "The original hot dog.",
+    "description": "An original hot dog with cost efficient ingredients and unique flavor.",
+    "details": ["Meat", "Bun", "Toppings"],
+    "tags": ["Classic", "House Favorite"]
   }
 ]
 
