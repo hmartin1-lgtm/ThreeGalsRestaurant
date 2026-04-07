@@ -88,7 +88,37 @@
     "tags": ["Refreshment", "Classic"]
   },
   {
-    
+    "id": "vanilla-milkshake",
+    "name": "Drew-Nilla Shake",
+    "price": 7.5,
+    "category": "drinks",
+    "image": "../Drew-nilla-Shake.png",
+    "shortDescription": "A creamy blend of vanilla ice cream and milk.",
+    "description": "A creamy and indulgent milkshake made with rich ice cream and smooth milk for a classic treat.",
+    "details": ["Ice cream", "Milk", "Vanilla"],
+    "tags": ["Indulgent", "Classic"]
+  },
+  {
+    "id": "chocolate-milkshake",
+    "name": "Chocolate Shake",
+    "price": 7.5,
+    "category": "drinks",
+    "image": "../Chocolate shake.png",
+    "shortDescription": "A flavorful blend of chocolate ice cream and milk.",
+    "description": "A rich and indulgent milkshake made with creamy chocolate ice cream and smooth milk for a delicious treat.",
+    "details": ["Chocolate ice cream", "Milk", "Chocolate syrup"],
+    "tags": ["Indulgent", "Classic"]
+  }
+  {
+    "id": "mint-milkshake",
+    "name": "Mint Shake",
+    "price": 7.75,
+    "category": "drinks",
+    "image": "../Mint Shake.png",
+    "shortDescription": "A refreshing blend of mint and chocolate ice cream with milk.",
+    "description": "A delightful milkshake made with creamy mint and chocolate ice cream and smooth milk for a refreshing treat.",
+    "details": ["Mint ice cream", "Chocolate ice cream", "Milk"],
+    "tags": ["Indulgent", "House Favorite"]
   }
 ]
 
