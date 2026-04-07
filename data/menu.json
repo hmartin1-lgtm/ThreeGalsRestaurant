@@ -108,7 +108,7 @@
     "description": "A rich and indulgent milkshake made with creamy chocolate ice cream and smooth milk for a delicious treat.",
     "details": ["Chocolate ice cream", "Milk", "Chocolate syrup"],
     "tags": ["Indulgent", "Classic"]
-  }
+  },
   {
     "id": "mint-milkshake",
     "name": "Mint Shake",
