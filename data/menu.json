@@ -1,25 +1,25 @@
 [
   {
     "id": "classic-gal",
-    "name": "Classic Han Burger",
-    "price": 10.5,
+    "name": "Klassic Kenna Burger",
+    "price": 9.50,
     "category": "burgers",
-    "image": "Han Burger.jpg",
-    "shortDescription": "Double smashed patties, crisp lettuce, tomato, pickles, house green sauce.",
-    "description": "A balanced house burger with juicy beef, toasted bun, and a bright green herb sauce that makes it stand out.",
-    "details": ["Two beef patties", "Green herb sauce", "Pickles, onion, tomato", "Served on toasted brioche"],
-    "tags": ["Best Seller", "House Favorite"]
+    "image": "Kenna Burger.jpg",
+    "shortDescription": "Double smashed patties, crisp lettuce, tomato, pickles, onion.",
+    "description": "A balanced house burger with juicy beef, toasted bun, and the perfect amount of veggies. ",
+    "details": ["One beef patty", "Pickles, onion, lettuce, tomato", "Served on toasted brioche"],
+    "tags": ["Best Seller", "House Favorite, Kenna's Favorite"]
   },
   {
-    "id": "garden-gal",
-    "name": "Garden Syler Burger",
+    "id": "pb-gal",
+    "name": "PB + Java Burger",
     "price": 9.75,
     "category": "burgers",
-    "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
-    "shortDescription": "Vegetarian patty, letuce, kale, spinach, jalapenos, lemon aioli.",
-    "description": "A fresh vegetarian option straight from the garden with a bright finish.",
-    "details": ["Vegetarian patty", "Letuce, kale, spinach", "Jalapenos", "Lemon aioli"],
-    "tags": ["Vegetarian", "Fresh"]
+    "image": "PBJava.jpg",
+    "shortDescription": "Beef patty, peanut butter glaze, espresso BBQ, lettuce, jalapenos.",
+    "description": "A bold sweet-and-savory burger featuring a juicy beef patty topped with creamy peanut butter and smoky espresso-infused BBQ sauce, balanced with crisp lettuce and a kick of jalapeno.",
+    "details": ["Beef patty", "Peanut butter glaze", "Espresso BBQ sause", "Lettuce, jalapenos", "Served on toasted brioche"],
+    "tags": ["A Coding Special", "Fresh"]
   },
   {
     "id": "veg-gal",
@@ -34,13 +34,38 @@
   },
   {
     "id": "death-gal",
-    "name": "Death by Burger",
+    "name": "Leviathan Burger",
     "price": 23.75,
     "category": "burgers",
-    "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+    "image": "Leviathan Burger.jpg",
     "shortDescription": "Six smash patties on 8 inch buns, avocado, lettuce, tomato, onion rings, pickles, bacon, and ketchup.",
     "description": "More meal than most people can survive. Includes triple batch of hot-honey fries.",
     "details": ["Six smash patties", "Avocado, lettuce, tomato", "Onion rings, pickles, bacon", "Hot-honey fries"],
-    "tags": ["Carnavore", "Fresh"]
+    "tags": ["Carnavore", "Death by Burger"]
+  },
+  {
+    "id": "han-gal",
+    "name": "Classic Han Burger",
+    "price": 11.5,
+    "category": "burgers",
+    "image": "Han Burger.jpg",
+    "shortDescription": "Juicy beef patty, crisp lettuce, tomato, pickles, cucumber, onions, and house green sauce.",
+    "description": "A balanced house burger with juicy beef, toasted gluten-free bun, and a bright green herb sauce that makes it stand out.",
+    "details": ["Juicy beef patty", "Green herb sauce", "Pickles, onion, tomato, cucumber, lettuce", "Served on a tasty gluten-free bun"],
+    "tags": ["Allergy-Friendly", "Hannah's Favorite"]
+  },
+  
+
+    {
+    "id": "bacon-gal",
+    "name": "Bacon Beach Burger",
+    "price": 12.5,
+    "category": "burgers",
+    "image": "Bacon Beach.jpg",
+    "shortDescription": "Beef patty, crispy bacon, grilled pineapple, BBQ sauce, lettuce, tomato.",
+    "description": " tropical twist on a classic burger—featuring a juicy beef patty stacked with crispy bacon, sweet grilled pineapple, and rich BBQ sauce, all balanced with fresh lettuce and tomato for a perfect beachside bite.",
+    "details": ["Juicy beef patty", "Crispy bacon", "Grilled pineapple", "BBQ sauce", "Lettuce & tomato", "Served on toasted brioche"],
+    "tags": ["Best Seller", "House Favorite", "Beachside Blast"]
   }
+ 
 ]
