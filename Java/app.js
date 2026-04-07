@@ -76,12 +76,22 @@ async function loadMenu() {
   try {
     const response = await fetch('../data/menu.json');
     if (!response.ok) throw new Error('No external menu found');
-    return await response.json();
+    var jsonData = await response.json();
+    return ConvertedJson(jsonData);
   } catch (error) {
     return FALLBACK_MENU;
   }
 }
-
+function ConvertedJson(jsonData) {
+  // Convert details and tags from csv format to arrays
+  jsonData.forEach(element => {
+     var myDetails = element.details
+     element.details = myDetails.split(',')
+     myDetails = element.tags
+     element.tags = myDetails.split(',')
+});
+  return jsonData
+}
 function money(value) {
   return `$${value.toFixed(2)}`;
 }
