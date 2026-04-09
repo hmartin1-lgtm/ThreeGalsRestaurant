@@ -8,7 +8,7 @@
     "shortDescription": "Double smashed patties, crisp lettuce, tomato, pickles, onion.",
     "description": "A balanced house burger with juicy beef, toasted bun, and the perfect amount of veggies. ",
     "details": ["One beef patty", "Pickles, onion, lettuce, tomato", "Served on toasted brioche"],
-    "tags": ["Best Seller", "House Favorite, Kenna's Favorite"]
+    "tags": ["Best Seller", "House Favorite", "Kenna's Favorite"]
   },
   {
     "id": "pb-gal",
@@ -97,7 +97,7 @@
     "name": "OG Hot Dog",
     "price": 1.75,
     "category": "hot-dogs",
-    "image": "../hotdog.png",
+    "image": "../hotdog.jpg",
     "shortDescription": "The original hot dog.",
     "description": "An original hot dog with cost efficient ingredients and unique flavor.",
     "details": ["Meat", "Bun", "Toppings"],
