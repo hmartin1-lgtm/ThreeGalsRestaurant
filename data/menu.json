@@ -189,6 +189,7 @@
   {
     "id": "Ketchup",
     "name": "Ketchup",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A tangy and savory condiment.",
     "description": "A classic ketchup that adds a tangy and savory flavor to any dish.",
@@ -198,6 +199,7 @@
   {
     "id": "Mustard",
     "name": "Mustard",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A tangy and savory condiment.",
     "description": "A classic mustard that adds a tangy flavor to any dish.",
@@ -207,6 +209,7 @@
   {
     "id": "Pickles",
     "name": "Pickles",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A savory sliced pickle.",
     "description": "A classic pickled vegetable to add to any dish.",
@@ -216,6 +219,7 @@
   {
     "id": "Onions",
     "name": "Onions",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Sliced onions.",
     "description": "Fresh sliced onions to add a crisp and flavorful bite to any dish.",
@@ -225,6 +229,7 @@
   {
     "id": "Lettuce",
     "name": "Lettuce",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Fresh lettuce leaves.",
     "description": "Crisp and fresh lettuce leaves to add a refreshing crunch to any dish.",
@@ -234,6 +239,7 @@
   {
     "id": "Tomato",
     "name": "Tomato",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Sliced tomatoes.",
     "description": "Juicy and ripe sliced tomatoes to add a burst of flavor and freshness to any dish.",
@@ -243,6 +249,7 @@
   {
     "id": "Bacon",
     "name": "Bacon",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Crispy bacon strips.",
     "description": "Savory and crispy bacon strips to add a smoky flavor and satisfying crunch to any dish.",
@@ -252,6 +259,7 @@
   {
     "id": "Avocado",
     "name": "Avocado",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Creamy avocado slices.",
     "description": "Rich and creamy avocado slices to add a smooth texture and buttery flavor to any dish.",
@@ -261,6 +269,7 @@
   {
     "id": "Jalapenos",
     "name": "Jalapeños",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Spicy jalapeño slices.",
     "description": "Fiery and flavorful jalapeño slices to add a spicy kick and vibrant flavor to any dish.",
@@ -270,6 +279,7 @@
   {
     "id": "Green-Herb-Sauce",
     "name": "Green Herb Sauce",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A vibrant green sauce made with fresh herbs.",
     "description": "A zesty and flavorful green herb sauce made with a blend of fresh herbs, perfect for adding a burst of freshness to any dish.",
@@ -279,6 +289,7 @@
   {
     "id": "Cheese",
     "name": "Cheese",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Melted cheese.",
     "description": "Rich and creamy melted cheese to add a gooey texture and savory flavor to any dish.",
@@ -288,6 +299,7 @@
   {
     "id": "BBQ-Sauce",
     "name": "BBQ Sauce",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A smoky and tangy barbecue sauce.",
     "description": "A flavorful barbecue sauce with a perfect balance of smoky, tangy, and sweet notes to enhance any dish.",
@@ -297,6 +309,7 @@
   {
     "id": "Peanut-Butter-Glaze",
     "name": "Peanut Butter Glaze",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A sweet and savory peanut butter glaze.",
     "description": "A rich and flavorful peanut butter glaze that adds a perfect balance of sweetness and savoriness to any dish.",
@@ -306,6 +319,7 @@
   {
     "id": "Espresso-BBQ-Sauce",
     "name": "Espresso BBQ Sauce",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A bold and smoky espresso-infused barbecue sauce.",
     "description": "A robust and flavorful barbecue sauce infused with rich espresso for a unique and bold taste that enhances any dish.",
@@ -315,6 +329,7 @@
   {
     "id": "Chocolate Syrup",
     "name": "Chocolate Syrup",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A sweet and rich chocolate syrup.",
     "description": "A decadent and flavorful chocolate syrup that adds a rich, indulgent touch to any dish.",
@@ -324,6 +339,7 @@
   {
     "id": "Lemon Aioli",
     "name": "Lemon Aioli",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A zesty and creamy lemon aioli.",
     "description": "A bright and flavorful lemon aioli made with fresh lemon juice and creamy mayonnaise, perfect for adding a tangy kick to any dish.",
@@ -333,6 +349,7 @@
   {
     "id": "Hot-Honey",
     "name": "Hot Honey",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A sweet and spicy hot honey sauce.",
     "description": "A deliciously addictive hot honey sauce that combines the sweetness of honey with a fiery kick of chili peppers, perfect for drizzling over fries, burgers, or anything you want to add a sweet and spicy twist to.",
@@ -342,6 +359,7 @@
   {
     "id": "Onion-Rings",
     "name": "Onion Rings",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "Crispy fried onion rings.",
     "description": "Golden and crispy onion rings that add a satisfying crunch and savory flavor to any dish.",
@@ -351,7 +369,8 @@
   {
     "id": "Gluten-Free-Bun",
     "name": "Gluten-Free Bun",
-    "category": "Buns",
+    "price": 0.75,
+    "category": "Toppings",
     "shortDescription": "A soft and delicious gluten-free bun.",
     "description": "A tasty and satisfying gluten-free bun that provides a perfect base for any burger without compromising on flavor or texture.",
     "details": ["Gluten-free flour", "Yeast", "Sugar", "Salt"],
@@ -360,7 +379,8 @@
   {
     "id": "Brioche-Bun",
     "name": "Brioche Bun",
-    "category": "Buns",
+    "price": 0.75,
+    "category": "Toppings",
     "shortDescription": "A soft and buttery brioche bun.",
     "description": "A rich and fluffy brioche bun that adds a touch of indulgence and a perfect balance of sweetness to any burger.",
     "details": ["Flour", "Butter", "Eggs", "Sugar", "Yeast"],
@@ -369,7 +389,8 @@
   {
     "id": "Lettuce-Wrap",
     "name": "Lettuce Wrap",
-    "category": "Buns",
+    "price": 0.75,
+    "category": "Toppings",
     "shortDescription": "A fresh and crisp lettuce wrap.",
     "description": "A light and refreshing lettuce wrap that provides a low-carb alternative to traditional buns while adding a crisp texture and fresh flavor to any burger.",
     "details": ["Lettuce leaves"],
@@ -378,6 +399,7 @@
   {
     "id": "Caramel Syrup",
     "name": "Caramel Syrup",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A sweet and rich caramel syrup.",
     "description": "A decadent and flavorful caramel syrup that adds a rich, indulgent touch to any dish.",
@@ -387,6 +409,7 @@
   {
     "id": "Ranch-Dressing",
     "name": "Ranch Dressing",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A creamy and tangy ranch dressing.",
     "description": "A classic ranch dressing that combines creamy buttermilk with a blend of herbs and spices for a tangy and flavorful addition to any dish.",
@@ -396,6 +419,7 @@
   {
     "id": "Buffalo-Sauce",
     "name": "Buffalo Sauce",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A spicy and tangy buffalo sauce.",
     "description": "A bold and flavorful buffalo sauce that combines the heat of hot sauce with a tangy kick, perfect for adding a spicy twist to any dish.",
@@ -405,6 +429,7 @@
   {
     "id": "Blue-Cheese-Dressing",
     "name": "Blue Cheese Dressing",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A creamy and tangy blue cheese dressing.",
     "description": "A rich and flavorful blue cheese dressing that combines creamy mayonnaise with tangy blue cheese crumbles for a delicious addition to any dish.",
@@ -414,6 +439,7 @@
   {
     "id": "Sriracha-Mayo",
     "name": "Sriracha Mayo",
+    "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A spicy and creamy sriracha mayo.",
     "description": "A flavorful sriracha mayo that combines the heat of sriracha sauce with the creaminess of mayonnaise for a deliciously spicy addition.",
