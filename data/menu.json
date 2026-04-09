@@ -27,7 +27,7 @@
     "price": 9.75,
     "category": "burgers",
     "image": "Veggie Burger.jpg",
-    "shortDescription": "A Vegetarian patty, avocado, spinach, pickled onion, lemon aioli.",
+    "shortDescription": "Vegetarian patty, avocado, spinach, pickled onion, lemon aioli.",
     "description": "A fresh vegetarian option with creamy avocado and a bright finish.",
     "details": ["Vegetarian patty", "Avocado & spinach", "Pickled red onion", "Lemon aioli"],
     "tags": ["Vegetarian", "Fresh"]

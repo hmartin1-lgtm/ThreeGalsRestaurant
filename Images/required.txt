@@ -29,6 +29,7 @@ Hot dogs
     Classic Dog
     chillion Dylan dog (Chilli Dog)
     jalepeno Dog
+    pickle dog
 
 Drinks
     Water
