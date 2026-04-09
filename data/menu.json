@@ -149,7 +149,7 @@
     "category": "drinks",
     "image": "Normal Soda.png",
     "shortDescription": "A refreshing beverage.",
-    "description": "A refreshing soda with a crisp taste and bubbly texture.",
+    "description": "A refreshing soda with a crisp bright taste and bubbly texture.",
     "details": ["Carbonated water", "Artificial flavors", "Artificial Sweeteners"],
     "tags": ["Refreshment", "Classic"]
   },
@@ -159,7 +159,7 @@
     "price": 7.5,
     "category": "drinks",
     "image": "Drew-nilla Shake.png",
-    "shortDescription": "A creamy blend of vanilla ice cream and milk.",
+    "shortDescription": "A blend of vanilla ice cream and milk.",
     "description": "A creamy and indulgent milkshake made with rich ice cream and smooth milk for a classic treat.",
     "details": ["Ice cream", "Milk", "Vanilla"],
     "tags": ["Indulgent", "Classic"]
@@ -442,7 +442,7 @@
     "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A spicy and creamy sriracha mayo.",
-    "description": "A flavorful sriracha mayo that combines the heat of sriracha sauce with the creaminess of mayonnaise for a deliciously spicy addition.",
+    "description": "A flavorful sriracha mayo that combines the heat of sriracha sauce with the creaminess of mayonnaise for a deliciously spicy addition to any dish.",
     "details": ["Mayonnaise", "Sriracha sauce", "Garlic"],
     "tags": ["Condiment", "Spicy"]
   }
