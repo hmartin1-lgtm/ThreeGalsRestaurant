@@ -136,7 +136,7 @@
     "name": "OG Hot Dog",
     "price": 1.75,
     "category": "hot-dogs",
-    "image": "hotdog.png",
+    "image": "hotdog.jpg",
     "shortDescription": "The original hot dog.",
     "description": "An original hot dog with cost efficient ingredients and unique flavor.",
     "details": ["Meat", "Bun", "Toppings"],
