@@ -72,6 +72,31 @@ const STORAGE_KEYS = {
   order: 'threeGalsOrder'
 };
 
+const TOPPINGS = [
+  { id: 'cheese', name: 'Cheese', price: 1.00 },
+  { id: 'bacon', name: 'Bacon', price: 2.00 },
+  { id: 'avocado', name: 'Avocado', price: 1.50 },
+  { id: 'jalapenos', name: 'Jalapeños', price: 0.50 },
+  { id: 'grilled-onions', name: 'Grilled Onions', price: 0.75 },
+  { id: 'extra-patty', name: 'Extra Patty', price: 3.00 },
+  { id: 'lettuce', name: 'Lettuce', price: 0.00 },
+  { id: 'tomato', name: 'Tomato', price: 0.00 },
+  { id: 'onion', name: 'Onion', price: 0.00 },
+  { id: 'pickles', name: 'Pickles', price: 0.00 }
+];
+
+const MIX_INS = [
+  { id: 'oreo', name: 'Oreo Crumble', price: 1.00 },
+  { id: 'm&m', name: 'M&M', price: 1.00 },
+  { id: 'peanut-butter', name: 'Peanut Butter', price: 1.50 },
+  { id: 'banana', name: 'Banana', price: 0.75 },
+  { id: 'strawberry', name: 'Strawberry', price: 0.75 },
+  { id: 'chocolate-chips', name: 'Chocolate Chips', price: 1.00 },
+  { id: 'whipped-cream', name: 'Whipped Cream', price: 0.50 }
+];
+
+let currentItem = null;
+
 async function loadMenu() {
   try {
     const response = await fetch('/data/menu.json');
@@ -114,17 +139,39 @@ function updateBagCount() {
   document.querySelectorAll('[data-bag-count]').forEach(el => el.textContent = count);
 }
 
-function addToCart(item, quantity = 1) {
+function addToCart(item, quantity = 1, addIns = []) {
   const cart = getCart();
-  const existing = cart.find(entry => entry.id === item.id);
+  const existing = cart.find(entry => entry.id === item.id && JSON.stringify(entry.addIns || []) === JSON.stringify(addIns));
   if (existing) existing.quantity += quantity;
-  else cart.push({ id: item.id, name: item.name, price: item.price, image: item.image, quantity });
+  else cart.push({ id: item.id, name: item.name, price: item.price, image: item.image, quantity, addIns });
   setCart(cart);
+}
+
+function needsCustomization(item) {
+  return item.category === 'burgers' || item.category === 'hot-dogs' || (item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake')));
+}
+
+function handleAddToCart(item) {
+  if (needsCustomization(item)) {
+    currentItem = item;
+    const isOnOrderOrDetails = window.location.pathname.includes('order.html') || window.location.pathname.includes('details.html');
+    if (isOnOrderOrDetails) {
+      showToppingsModal(item);
+    } else {
+      window.location.href = `toppings.html?id=${item.id}`;
+    }
+  } else {
+    addToCart(item);
+    alert(`${item.name} added to bag.`);
+  }
 }
 
 function cartTotals() {
   const cart = getCart();
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((sum, item) => {
+    const addInsPrice = (item.addIns || []).reduce((addSum, addIn) => addSum + addIn.price, 0);
+    return sum + (item.price + addInsPrice) * item.quantity;
+  }, 0);
   const service = cart.length ? 1.5 : 0;
   const total = subtotal + service;
   return { subtotal, service, total };
@@ -159,8 +206,7 @@ async function initHome() {
   featuredContainer.querySelectorAll('[data-add-id]').forEach(button => {
     button.addEventListener('click', () => {
       const item = menu.find(entry => entry.id === button.dataset.addId);
-      window.location.href = `customize.html?id=${item.id}`;
-      alert(`${item.name} added to bag.`);
+      handleAddToCart(item);
     });
   });
 }
@@ -185,7 +231,7 @@ async function initOrder() {
     container.querySelectorAll('[data-add-id]').forEach(button => {
       button.addEventListener('click', () => {
         const item = menu.find(entry => entry.id === button.dataset.addId);
-        window.location.href = `customize.html?id=${item.id}`;
+        handleAddToCart(item);
       });
     });
   }
@@ -222,8 +268,7 @@ async function initDetails() {
   `;
 
   document.querySelector('#detail-add').addEventListener('click', () => {
-    addToCart(item);
-    alert(`${item.name} added to bag.`);
+    handleAddToCart(item);
   });
 }
 
@@ -252,27 +297,28 @@ function initBag() {
       return;
     }
 
-    cartContainer.innerHTML = cart.map(item => `
+    cartContainer.innerHTML = cart.map((item, index) => {
+      const addInsPrice = (item.addIns || []).reduce((sum, addIn) => sum + addIn.price, 0);
+      const itemPrice = item.price + addInsPrice;
+      const addInsText = item.addIns && item.addIns.length ? `<br><small class="muted">${item.addIns.map(a => a.name).join(', ')}</small>` : '';
+      return `
       <article class="cart-item">
         <img src="/Images/${item.image}" alt="${item.name}">
         <div>
-          <h3>${item.name}</h3>
-          ${item.toppings && item.toppings.length 
-  ? `<p class="muted">Toppings: ${item.toppings.join(", ")}</p>` 
-  : ""}
-          <p class="muted">${money(item.price)} each</p>
-          <button class="btn btn-outline" data-remove-id="${item.id}" style="margin-top:10px;">Remove</button>
+          <h3>${item.name}${addInsText}</h3>
+          <p class="muted">${money(itemPrice)} each</p>
+          <button class="btn btn-outline" data-remove-index="${index}" style="margin-top:10px;">Remove</button>
         </div>
         <div class="text-right">
           <div class="qty-control">
-            <button data-qty-id="${item.id}" data-direction="down">−</button>
+            <button data-qty-index="${index}" data-direction="down">−</button>
             <span>${item.quantity}</span>
-            <button data-qty-id="${item.id}" data-direction="up">+</button>
+            <button data-qty-index="${index}" data-direction="up">+</button>
           </div>
-          <div class="price" style="margin-top:10px;">${money(item.price * item.quantity)}</div>
+          <div class="price" style="margin-top:10px;">${money(itemPrice * item.quantity)}</div>
         </div>
       </article>
-    `).join('');
+    `;}).join('');
 
     const totals = cartTotals();
     summaryTarget.innerHTML = `
@@ -324,7 +370,12 @@ function initCheckout() {
 
   summaryTarget.innerHTML = `
     <h3>Review</h3>
-    ${cart.map(item => `<div class="summary-line"><span>${item.quantity} × ${item.name}</span><strong>${money(item.price * item.quantity)}</strong></div>`).join('')}
+    ${cart.map(item => {
+      const addInsPrice = (item.addIns || []).reduce((sum, addIn) => sum + addIn.price, 0);
+      const itemTotal = (item.price + addInsPrice) * item.quantity;
+      const addInsText = item.addIns && item.addIns.length ? ` (${item.addIns.map(a => a.name).join(', ')})` : '';
+      return `<div class="summary-line"><span>${item.quantity} × ${item.name}${addInsText}</span><strong>${money(itemTotal)}</strong></div>`;
+    }).join('')}
     <div class="summary-line"><span>Subtotal</span><strong>${money(totals.subtotal)}</strong></div>
     <div class="summary-line"><span>Service fee</span><strong>${money(totals.service)}</strong></div>
     <div class="summary-line"><span class="summary-total">Total</span><span class="summary-total">${money(totals.total)}</span></div>
@@ -387,104 +438,128 @@ function setActiveNav() {
   });
 }
 
+function initToppings() {
+  const container = document.querySelector('#toppings-container');
+  const itemNameEl = document.querySelector('#item-name');
+  const itemDescEl = document.querySelector('#item-description');
+  const addBtn = document.querySelector('#add-to-cart-btn');
+  if (!container || !itemNameEl || !itemDescEl || !addBtn) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) {
+    window.location.href = 'order.html';
+    return;
+  }
+
+  loadMenu().then(menu => {
+    const item = menu.find(entry => entry.id === id);
+    if (!item) {
+      window.location.href = 'order.html';
+      return;
+    }
+
+    itemNameEl.textContent = item.name;
+    itemDescEl.textContent = item.shortDescription;
+
+    const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
+    const options = isShake ? MIX_INS : TOPPINGS;
+    const title = isShake ? 'Mix-Ins' : 'Toppings';
+
+    container.innerHTML = `
+      <h3>${title}</h3>
+      <p>Select any ${title.toLowerCase()} you'd like to add.</p>
+      <div class="toppings-grid">
+        ${options.map(option => `
+          <label class="topping-option">
+            <input type="checkbox" data-id="${option.id}" data-price="${option.price}">
+            <span class="topping-name">${option.name}</span>
+            <span class="topping-price">${option.price > 0 ? money(option.price) : 'Free'}</span>
+          </label>
+        `).join('')}
+      </div>
+    `;
+
+    addBtn.addEventListener('click', () => {
+      const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
+        id: cb.dataset.id,
+        name: options.find(o => o.id === cb.dataset.id).name,
+        price: parseFloat(cb.dataset.price)
+      }));
+      addToCart(item, 1, selected);
+      alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+      window.location.href = 'bag.html';
+    });
+  });
+}
+
+function showToppingsModal(item) {
+  const modal = document.querySelector('#toppings-modal');
+  const itemNameEl = document.querySelector('#modal-item-name');
+  const itemDescEl = document.querySelector('#modal-item-description');
+  const container = document.querySelector('#modal-toppings-container');
+  const addBtn = document.querySelector('#modal-add-to-cart');
+  const cancelBtn = document.querySelector('#modal-cancel');
+  const closeBtn = modal.querySelector('.close');
+
+  if (!modal || !itemNameEl || !itemDescEl || !container || !addBtn || !cancelBtn || !closeBtn) return;
+
+  itemNameEl.textContent = `Customize ${item.name}`;
+  itemDescEl.textContent = item.shortDescription;
+
+  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
+  const options = isShake ? MIX_INS : TOPPINGS;
+  const title = isShake ? 'Mix-Ins' : 'Toppings';
+
+  container.innerHTML = `
+    <h3>${title}</h3>
+    <p>Select any ${title.toLowerCase()} you'd like to add.</p>
+    <div class="toppings-grid">
+      ${options.map(option => `
+        <label class="topping-option">
+          <input type="checkbox" data-id="${option.id}" data-price="${option.price}">
+          <span class="topping-name">${option.name}</span>
+          <span class="topping-price">${option.price > 0 ? money(option.price) : 'Free'}</span>
+        </label>
+      `).join('')}
+    </div>
+  `;
+
+  modal.style.display = 'flex';
+
+  const closeModal = () => {
+    modal.style.display = 'none';
+    currentItem = null;
+  };
+
+  cancelBtn.onclick = closeModal;
+  closeBtn.onclick = closeModal;
+  modal.onclick = (e) => {
+    if (e.target === modal) closeModal();
+  };
+
+  addBtn.onclick = () => {
+    const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
+      id: cb.dataset.id,
+      name: options.find(o => o.id === cb.dataset.id).name,
+      price: parseFloat(cb.dataset.price)
+    }));
+    addToCart(item, 1, selected);
+    alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+    closeModal();
+  };
+}
+
 function initApp() {
   updateBagCount();
   setActiveNav();
   initHome();
   initOrder();
   initDetails();
+  initToppings();
   initBag();
   initCheckout();
   initConfirmation();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
-
-
-// Get URL param
-function getParam(name) {
-  const url = new URL(window.location.href);
-  return url.searchParams.get(name);
-}
-
-if (window.location.pathname.includes("customize.html")) {
-
-  const burgerId = getParam("id");
-
-  // You should already have menu stored or fetched
-loadMenu().then(menu => {
-  const burger = menu.find(item => item.id == burgerId);
-
-  if (burger) {
-    document.getElementById("burger-title").textContent = `Customize ${burger.name}`;
-  }
-
-  document.getElementById("customize-form").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const selected = document.querySelectorAll("input[type=checkbox]:checked");
-
-    let toppings = [];
-    let extraCost = 0;
-
-    selected.forEach(item => {
-      toppings.push(item.value);
-      if (item.dataset.price) {
-        extraCost += parseFloat(item.dataset.price);
-      }
-    });
-
-    const cart = getCart();
-
-    cart.push({
-      id: burger.id,
-      name: burger.name,
-      image: burger.image, // important for bag page
-      toppings: toppings,
-      price: burger.price + extraCost,
-      quantity: 1
-    });
-
-    setCart(cart);
-
-    window.location.href = "bag.html";
-  });
-});
-
-  // Show burger name
-  if (burger) {
-    document.getElementById("burger-title").textContent = `Customize ${burger.name}`;
-  }
-
-  document.getElementById("customize-form").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const selected = document.querySelectorAll("input[type=checkbox]:checked");
-
-    let toppings = [];
-    let extraCost = 0;
-
-    selected.forEach(item => {
-      toppings.push(item.value);
-
-      if (item.dataset.price) {
-        extraCost += parseFloat(item.dataset.price);
-      }
-    });
-
-    const cart = getCart();
-
-    cart.push({
-      id: burger.id,
-      name: burger.name,
-      toppings: toppings,
-      price: burger.price + extraCost,
-      quantity: 1
-    });
-
-    setCart(cart);
-
-    // NOW go to bag
-    window.location.href = "bag.html";
-  });
-}

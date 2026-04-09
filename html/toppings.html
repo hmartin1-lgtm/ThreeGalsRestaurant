@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Details | Three Gals</title>
+  <title>Customize | Three Gals</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -36,33 +36,25 @@
 <section class="page-hero">
   <div class="container">
     <div class="page-hero-shell">
-      <span class="eyebrow">Item details</span>
-      <h1>Learn what makes each item special.</h1>
-      <p>The details page is designed to pull one product by ID from a JSON dataset and show a larger, more descriptive view.</p>
+      <span class="eyebrow">Customize your order</span>
+      <h1 id="item-name">Loading...</h1>
+      <p id="item-description">Choose your toppings or mix-ins to make it perfect.</p>
     </div>
   </div>
 </section>
 <section class="section">
   <div class="container">
-    <div id="detail-view" class="grid-12 detail-layout"></div>
+    <div class="card">
+      <div id="toppings-container">
+        <!-- Toppings or mix-ins will be loaded here -->
+      </div>
+      <div class="cta-row" style="margin-top: 2rem;">
+        <button class="btn btn-secondary" onclick="goBack()">Back to Menu</button>
+        <button class="btn btn-primary" id="add-to-cart-btn">Add to Bag</button>
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- Toppings Modal -->
-<div id="toppings-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 id="modal-item-name">Customize Your Item</h2>
-    <p id="modal-item-description">Choose your toppings or mix-ins.</p>
-    <div id="modal-toppings-container">
-      <!-- Toppings will be loaded here -->
-    </div>
-    <div class="cta-row" style="margin-top: 2rem;">
-      <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
-      <button class="btn btn-primary" id="modal-add-to-cart">Add to Bag</button>
-    </div>
-  </div>
-</div>
 
   </main>
 
