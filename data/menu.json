@@ -143,6 +143,28 @@
     "tags": ["Classic", "Budget Friendly"]
   },
   {
+    "id": "chillin-dylan-dog",
+    "name": "Chillin Dylan Dog",
+    "price": 4.50,
+    "category": "hot-dogs",
+    "image": "Chillin Dylan Dog.png",
+    "shortDescription": "Grilled hot dog loaded with warm chili, cheese, and diced onions.",
+    "description": "A messy, hearty classic stacked with bold chili flavor and satisfying toppings.",
+    "details": ["Grilled hot dog", "Warm chili", "Shredded cheese", "Diced onions", "Toasted bun"],
+    "tags": ["Hearty", "Loaded"]
+  },
+  {
+    "id": "jalapeno-dog",
+    "name": "Jalapeño Dog",
+    "price": 4.25,
+    "category": "hot-dogs",
+    "image": "Jalapeno Dog.png",
+    "shortDescription": "Grilled hot dog topped with jalapeños, melted cheese, and spicy sauce.",
+    "description": "A bold and spicy hot dog built with heat and flavor in every bite.",
+    "details": ["Grilled hot dog", "Sliced jalapeños", "Melted cheese", "Spicy sauce", "Toasted bun"],
+    "tags": ["Spicy", "Bold"]
+  },
+  {
     "id": "Soda",
     "name": "Soda",
     "price": 2.75,
