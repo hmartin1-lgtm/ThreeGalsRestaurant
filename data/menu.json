@@ -185,6 +185,69 @@
     "description": "A delightful milkshake made with creamy mint and chocolate ice cream and smooth milk for a refreshing treat.",
     "details": ["Mint ice cream", "Chocolate ice cream", "Milk"],
     "tags": ["Indulgent", "House Favorite"]
+  },
+  {
+    "id": "Ketchup",
+    "name": "Ketchup",
+    "category": "Toppings",
+    "shortDescription": "A tangy and savory condiment.",
+    "description": "A classic ketchup that adds a tangy and savory flavor to any dish.",
+    "details": ["Tomatoes", "Vinegar", "Sugar", "Spices"],
+    "tags": ["Condiment", "Classic"]
+  },
+  {
+    "id": "Mustard",
+    "name": "Mustard",
+    "category": "Toppings",
+    "shortDescription": "A tangy and savory condiment.",
+    "description": "A classic mustard that adds a tangy flavor to any dish.",
+    "details": ["Mustard seeds", "Spices"],
+    "tags": ["Condiment", "Classic"]
+  },
+  {
+    "id": "Pickles",
+    "name": "Pickles",
+    "category": "Toppings",
+    "shortDescription": "A savory sliced pickle.",
+    "description": "A classic pickled vegetable to add to any dish.",
+    "details": ["Cucumbers", "Vinegar"],
+    "tags": ["Condiment", "Classic"]
+  },
+  {
+    "id": "Onions",
+    "name": "Onions",
+    "category": "Toppings",
+    "shortDescription": "Sliced onions.",
+    "description": "Fresh sliced onions to add a crisp and flavorful bite to any dish.",
+    "details": ["Onions"],
+    "tags": ["Condiment", "Classic"]
+  },
+  {
+    "id": "Lettuce",
+    "name": "Lettuce",
+    "category": "Toppings",
+    "shortDescription": "Fresh lettuce leaves.",
+    "description": "Crisp and fresh lettuce leaves to add a refreshing crunch to any dish.",
+    "details": ["Lettuce"],
+    "tags": ["Condiment", "Fresh"]
+  },
+  {
+    "id": "Tomato",
+    "name": "Tomato",
+    "category": "Toppings",
+    "shortDescription": "Sliced tomatoes.",
+    "description": "Juicy and ripe sliced tomatoes to add a burst of flavor and freshness to any dish.",
+    "details": ["Tomatoes"],
+    "tags": ["Condiment", "Fresh"]
+  },
+  {
+    "id": "Bacon",
+    "name": "Bacon",
+    "category": "Toppings",
+    "shortDescription": "Crispy bacon strips.",
+    "description": "Savory and crispy bacon strips to add a smoky flavor and satisfying crunch to any dish.",
+    "details": ["Pork", "Salt", "Spices"],
+    "tags": ["Condiment", "Indulgent"]
   }
 ]
 

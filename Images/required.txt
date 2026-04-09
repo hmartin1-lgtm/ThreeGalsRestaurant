@@ -35,5 +35,4 @@ Drinks
     Soda
     Specialty
         Cucumber Mint Lemonade
-    
 
