@@ -165,6 +165,17 @@
     "tags": ["Spicy", "Bold"]
   },
   {
+  "id": "pickles-dog",
+  "name": "Pickles Dog",
+  "price": 4.25,
+  "category": "hot-dogs",
+  "image": "Pickle Dog.png",
+  "shortDescription": "Grilled hot dog stacked with fresh pickles and tangy flavor.",
+  "description": "A sharp, tangy twist on a classic hot dog, loaded with pickles for extra crunch and bite.",
+  "details": ["Grilled hot dog", "Sliced pickles", "Pickle relish", "Mustard", "Toasted bun"],
+  "tags": ["Tangy", "Crunchy"]
+  },
+  {
     "id": "Soda",
     "name": "Soda",
     "price": 2.75,
