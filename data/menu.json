@@ -26,7 +26,7 @@
     "name": "Vegitaidan Burger",
     "price": 9.75,
     "category": "burgers",
-    "image": "Veggie Burger.jpg",
+    "image": "Vegitaiden Burger 2.jpg",
     "shortDescription": "Vegetarian patty, avocado, spinach, pickled onion, lemon aioli.",
     "description": "A fresh vegetarian option with creamy avocado and a bright finish.",
     "details": ["Vegetarian patty", "Avocado & spinach", "Pickled red onion", "Lemon aioli"],
@@ -163,6 +163,17 @@
     "description": "A bold and spicy hot dog built with heat and flavor in every bite.",
     "details": ["Grilled hot dog", "Sliced jalapeños", "Melted cheese", "Spicy sauce", "Toasted bun"],
     "tags": ["Spicy", "Bold"]
+  },
+  {
+  "id": "pickles-dog",
+  "name": "Pickles Dog",
+  "price": 4.25,
+  "category": "hot-dogs",
+  "image": "Pickle Dog.png",
+  "shortDescription": "Grilled hot dog stacked with fresh pickles and tangy flavor.",
+  "description": "A sharp, tangy twist on a classic hot dog, loaded with pickles for extra crunch and bite.",
+  "details": ["Grilled hot dog", "Sliced pickles", "Pickle relish", "Mustard", "Toasted bun"],
+  "tags": ["Tangy", "Crunchy"]
   },
   {
     "id": "Soda",
