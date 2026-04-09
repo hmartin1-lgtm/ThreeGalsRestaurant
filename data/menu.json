@@ -248,6 +248,177 @@
     "description": "Savory and crispy bacon strips to add a smoky flavor and satisfying crunch to any dish.",
     "details": ["Pork", "Salt", "Spices"],
     "tags": ["Condiment", "Indulgent"]
+  },
+  {
+    "id": "Avocado",
+    "name": "Avocado",
+    "category": "Toppings",
+    "shortDescription": "Creamy avocado slices.",
+    "description": "Rich and creamy avocado slices to add a smooth texture and buttery flavor to any dish.",
+    "details": ["Avocado"],
+    "tags": ["Condiment", "Fresh"]
+  },
+  {
+    "id": "Jalapenos",
+    "name": "Jalapeños",
+    "category": "Toppings",
+    "shortDescription": "Spicy jalapeño slices.",
+    "description": "Fiery and flavorful jalapeño slices to add a spicy kick and vibrant flavor to any dish.",
+    "details": ["Jalapeños"],
+    "tags": ["Condiment", "Spicy"]
+  },
+  {
+    "id": "Green-Herb-Sauce",
+    "name": "Green Herb Sauce",
+    "category": "Toppings",
+    "shortDescription": "A vibrant green sauce made with fresh herbs.",
+    "description": "A zesty and flavorful green herb sauce made with a blend of fresh herbs, perfect for adding a burst of freshness to any dish.",
+    "details": ["Fresh herbs", "Olive oil", "Garlic", "Lemon juice"],
+    "tags": ["Condiment", "Fresh"]
+  },
+  {
+    "id": "Cheese",
+    "name": "Cheese",
+    "category": "Toppings",
+    "shortDescription": "Melted cheese.",
+    "description": "Rich and creamy melted cheese to add a gooey texture and savory flavor to any dish.",
+    "details": ["Cheese"],
+    "tags": ["Condiment", "Indulgent"]
+  },
+  {
+    "id": "BBQ-Sauce",
+    "name": "BBQ Sauce",
+    "category": "Toppings",
+    "shortDescription": "A smoky and tangy barbecue sauce.",
+    "description": "A flavorful barbecue sauce with a perfect balance of smoky, tangy, and sweet notes to enhance any dish.",
+    "details": ["Tomatoes", "Vinegar", "Sugar", "Spices"],
+    "tags": ["Condiment", "Savory"]
+  },
+  {
+    "id": "Peanut-Butter-Glaze",
+    "name": "Peanut Butter Glaze",
+    "category": "Toppings",
+    "shortDescription": "A sweet and savory peanut butter glaze.",
+    "description": "A rich and flavorful peanut butter glaze that adds a perfect balance of sweetness and savoriness to any dish.",
+    "details": ["Peanut butter", "Honey", "Soy sauce"],
+    "tags": ["Condiment", "Sweet & Savory"]
+  },
+  {
+    "id": "Espresso-BBQ-Sauce",
+    "name": "Espresso BBQ Sauce",
+    "category": "Toppings",
+    "shortDescription": "A bold and smoky espresso-infused barbecue sauce.",
+    "description": "A robust and flavorful barbecue sauce infused with rich espresso for a unique and bold taste that enhances any dish.",
+    "details": ["Tomatoes", "Vinegar", "Sugar", "Espresso", "Spices"],
+    "tags": ["Condiment", "Bold"]
+  },
+  {
+    "id": "Chocolate Syrup",
+    "name": "Chocolate Syrup",
+    "category": "Toppings",
+    "shortDescription": "A sweet and rich chocolate syrup.",
+    "description": "A decadent and flavorful chocolate syrup that adds a rich, indulgent touch to any dish.",
+    "details": ["Chocolate", "Milk", "Sugar"],
+    "tags": ["Condiment", "Sweet"]
+  },
+  {
+    "id": "Lemon Aioli",
+    "name": "Lemon Aioli",
+    "category": "Toppings",
+    "shortDescription": "A zesty and creamy lemon aioli.",
+    "description": "A bright and flavorful lemon aioli made with fresh lemon juice and creamy mayonnaise, perfect for adding a tangy kick to any dish.",
+    "details": ["Mayonnaise", "Lemon juice", "Garlic", "Olive oil"],
+    "tags": ["Condiment", "Fresh"]
+  },
+  {
+    "id": "Hot-Honey",
+    "name": "Hot Honey",
+    "category": "Toppings",
+    "shortDescription": "A sweet and spicy hot honey sauce.",
+    "description": "A deliciously addictive hot honey sauce that combines the sweetness of honey with a fiery kick of chili peppers, perfect for drizzling over fries, burgers, or anything you want to add a sweet and spicy twist to.",
+    "details": ["Honey", "Chili peppers", "Vinegar"],
+    "tags": ["Condiment", "Sweet & Spicy"]
+  },
+  {
+    "id": "Onion-Rings",
+    "name": "Onion Rings",
+    "category": "Toppings",
+    "shortDescription": "Crispy fried onion rings.",
+    "description": "Golden and crispy onion rings that add a satisfying crunch and savory flavor to any dish.",
+    "details": ["Onions", "Batter", "Fried"],
+    "tags": ["Condiment", "Indulgent"]
+  },
+  {
+    "id": "Gluten-Free-Bun",
+    "name": "Gluten-Free Bun",
+    "category": "Buns",
+    "shortDescription": "A soft and delicious gluten-free bun.",
+    "description": "A tasty and satisfying gluten-free bun that provides a perfect base for any burger without compromising on flavor or texture.",
+    "details": ["Gluten-free flour", "Yeast", "Sugar", "Salt"],
+    "tags": ["Bun", "Gluten-Free"]
+  },
+  {
+    "id": "Brioche-Bun",
+    "name": "Brioche Bun",
+    "category": "Buns",
+    "shortDescription": "A soft and buttery brioche bun.",
+    "description": "A rich and fluffy brioche bun that adds a touch of indulgence and a perfect balance of sweetness to any burger.",
+    "details": ["Flour", "Butter", "Eggs", "Sugar", "Yeast"],
+    "tags": ["Bun", "Indulgent"]
+  },
+  {
+    "id": "Lettuce-Wrap",
+    "name": "Lettuce Wrap",
+    "category": "Buns",
+    "shortDescription": "A fresh and crisp lettuce wrap.",
+    "description": "A light and refreshing lettuce wrap that provides a low-carb alternative to traditional buns while adding a crisp texture and fresh flavor to any burger.",
+    "details": ["Lettuce leaves"],
+    "tags": ["Bun", "Low-Carb"]
+  },
+  {
+    "id": "Caramel Syrup",
+    "name": "Caramel Syrup",
+    "category": "Toppings",
+    "shortDescription": "A sweet and rich caramel syrup.",
+    "description": "A decadent and flavorful caramel syrup that adds a rich, indulgent touch to any dish.",
+    "details": ["Caramel", "Milk", "Sugar"],
+    "tags": ["Condiment", "Sweet"]
+  },
+  {
+    "id": "Ranch-Dressing",
+    "name": "Ranch Dressing",
+    "category": "Toppings",
+    "shortDescription": "A creamy and tangy ranch dressing.",
+    "description": "A classic ranch dressing that combines creamy buttermilk with a blend of herbs and spices for a tangy and flavorful addition to any dish.",
+    "details": ["Buttermilk", "Mayonnaise", "Garlic", "Herbs", "Spices"],
+    "tags": ["Condiment", "Classic"]
+  },
+  {
+    "id": "Buffalo-Sauce",
+    "name": "Buffalo Sauce",
+    "category": "Toppings",
+    "shortDescription": "A spicy and tangy buffalo sauce.",
+    "description": "A bold and flavorful buffalo sauce that combines the heat of hot sauce with a tangy kick, perfect for adding a spicy twist to any dish.",
+    "details": ["Hot sauce", "Butter", "Vinegar", "Garlic"],
+    "tags": ["Condiment", "Spicy"]
+  },
+  {
+    "id": "Blue-Cheese-Dressing",
+    "name": "Blue Cheese Dressing",
+    "category": "Toppings",
+    "shortDescription": "A creamy and tangy blue cheese dressing.",
+    "description": "A rich and flavorful blue cheese dressing that combines creamy mayonnaise with tangy blue cheese crumbles for a delicious addition to any dish.",
+    "details": ["Mayonnaise", "Blue cheese", "Buttermilk", "Garlic"],
+    "tags": ["Condiment", "Indulgent"]
+  },
+  {
+    "id": "Sriracha-Mayo",
+    "name": "Sriracha Mayo",
+    "category": "Toppings",
+    "shortDescription": "A spicy and creamy sriracha mayo.",
+    "description": "A flavorful sriracha mayo that combines the heat of sriracha sauce with the creaminess of mayonnaise for a deliciously spicy addition to any dish.",
+    "details": ["Mayonnaise", "Sriracha sauce", "Garlic"],
+    "tags": ["Condiment", "Spicy"]
   }
 ]
 
