@@ -159,7 +159,7 @@ async function initHome() {
   featuredContainer.querySelectorAll('[data-add-id]').forEach(button => {
     button.addEventListener('click', () => {
       const item = menu.find(entry => entry.id === button.dataset.addId);
-      addToCart(item);
+      window.location.href = `customize.html?id=${item.id}`;
       alert(`${item.name} added to bag.`);
     });
   });
@@ -185,8 +185,7 @@ async function initOrder() {
     container.querySelectorAll('[data-add-id]').forEach(button => {
       button.addEventListener('click', () => {
         const item = menu.find(entry => entry.id === button.dataset.addId);
-        addToCart(item);
-        alert(`${item.name} added to bag.`);
+        window.location.href = `customize.html?id=${item.id}`;
       });
     });
   }
@@ -258,6 +257,9 @@ function initBag() {
         <img src="/Images/${item.image}" alt="${item.name}">
         <div>
           <h3>${item.name}</h3>
+          ${item.toppings && item.toppings.length 
+  ? `<p class="muted">Toppings: ${item.toppings.join(", ")}</p>` 
+  : ""}
           <p class="muted">${money(item.price)} each</p>
           <button class="btn btn-outline" data-remove-id="${item.id}" style="margin-top:10px;">Remove</button>
         </div>
@@ -397,3 +399,92 @@ function initApp() {
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
+
+
+// Get URL param
+function getParam(name) {
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name);
+}
+
+if (window.location.pathname.includes("customize.html")) {
+
+  const burgerId = getParam("id");
+
+  // You should already have menu stored or fetched
+loadMenu().then(menu => {
+  const burger = menu.find(item => item.id == burgerId);
+
+  if (burger) {
+    document.getElementById("burger-title").textContent = `Customize ${burger.name}`;
+  }
+
+  document.getElementById("customize-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const selected = document.querySelectorAll("input[type=checkbox]:checked");
+
+    let toppings = [];
+    let extraCost = 0;
+
+    selected.forEach(item => {
+      toppings.push(item.value);
+      if (item.dataset.price) {
+        extraCost += parseFloat(item.dataset.price);
+      }
+    });
+
+    const cart = getCart();
+
+    cart.push({
+      id: burger.id,
+      name: burger.name,
+      image: burger.image, // important for bag page
+      toppings: toppings,
+      price: burger.price + extraCost,
+      quantity: 1
+    });
+
+    setCart(cart);
+
+    window.location.href = "bag.html";
+  });
+});
+
+  // Show burger name
+  if (burger) {
+    document.getElementById("burger-title").textContent = `Customize ${burger.name}`;
+  }
+
+  document.getElementById("customize-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const selected = document.querySelectorAll("input[type=checkbox]:checked");
+
+    let toppings = [];
+    let extraCost = 0;
+
+    selected.forEach(item => {
+      toppings.push(item.value);
+
+      if (item.dataset.price) {
+        extraCost += parseFloat(item.dataset.price);
+      }
+    });
+
+    const cart = getCart();
+
+    cart.push({
+      id: burger.id,
+      name: burger.name,
+      toppings: toppings,
+      price: burger.price + extraCost,
+      quantity: 1
+    });
+
+    setCart(cart);
+
+    // NOW go to bag
+    window.location.href = "bag.html";
+  });
+}
