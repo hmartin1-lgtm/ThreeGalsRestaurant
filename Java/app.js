@@ -74,14 +74,28 @@ const STORAGE_KEYS = {
 
 async function loadMenu() {
   try {
-    const response = await fetch('../data/menu.json');
+    const response = await fetch('/data/menu.json');
     if (!response.ok) throw new Error('No external menu found');
-    return await response.json();
+    var jsonData = await response.json();
+    return ConvertedJson(jsonData);
   } catch (error) {
     return FALLBACK_MENU;
   }
 }
-
+function ConvertedJson(jsonData) {
+  // Convert details and tags from csv format to arrays
+  jsonData.forEach(element => {
+     var myDetails = element.details
+     if (myDetails === String) {
+          element.details = myDetails.split(',')
+     }
+     myDetails = element.tags
+     if (myDetails === String) {
+          element.tags = myDetails.split(',')
+     }
+});
+  return jsonData
+}
 function money(value) {
   return `$${value.toFixed(2)}`;
 }
@@ -119,7 +133,7 @@ function cartTotals() {
 function renderMenuCards(items, container) {
   container.innerHTML = items.map(item => `
     <article class="card menu-card">
-      <img src="../Images/${item.image}" alt="${item.name}">
+      <img src="/Images/${item.image}" alt="${item.name}">
       <div class="menu-card-body">
         <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
         <h3>${item.name}</h3>
@@ -192,7 +206,7 @@ async function initDetails() {
 
   target.innerHTML = `
     <div class="span-7 card detail-media">
-      <img src="../Images/${item.image}" alt="${item.name}">
+      <img src="/Images/${item.image}" alt="${item.name}">
     </div>
     <div class="span-5 card detail-panel">
       <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
@@ -241,7 +255,7 @@ function initBag() {
 
     cartContainer.innerHTML = cart.map(item => `
       <article class="cart-item">
-        <img src="../Images/${item.image}" alt="${item.name}">
+        <img src="/Images/${item.image}" alt="${item.name}">
         <div>
           <h3>${item.name}</h3>
           <p class="muted">${money(item.price)} each</p>
