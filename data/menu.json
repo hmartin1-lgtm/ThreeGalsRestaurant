@@ -67,19 +67,60 @@
     "details": ["Juicy beef patty", "Crispy bacon", "Grilled pineapple", "BBQ sauce", "Lettuce & tomato", "Served on toasted brioche"],
     "tags": ["Best Seller", "House Favorite", "Beachside Blast"]
   },
- 
-
-  
-  {
+ {
     "id": "Regular-Fries",
     "name": "House Fries",
     "price": 3.75,
     "category": "Fries",
-    "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+    "image": "Regular Fries.png",
     "shortDescription": "House-cut, Crispy, Perfectly Seasoned.",
     "description": "Crispy, golden house-cut fries with a perfectly seasoned crunch and fluffy interior—served hot and fresh, just the way comfort food should be at Three Gals.",
-    "details": ["Six smash patties", "Avocado, lettuce, tomato", "Onion rings, pickles, bacon", "Hot-honey fries"],
-    "tags": ["Carnavore", "Fresh"]
+    "details": ["House Cut", "Perfectly Seasoned", "Comfort Food"],
+    "tags": ["Comfort Food", "Fresh"]
+  },
+  {
+    "id": "Cheesy-Fries",
+    "name": "Cheesy Fries",
+    "price": 4.25,
+    "category": "Fries",
+    "image": "Cheese Fries.png",
+    "shortDescription": "Crispy golden fries smothered in rich, melted cheese.",
+    "description": "A comforting classic loaded with gooey cheese over hot, crispy fries—perfect for sharing or keeping all to yourself.",
+    "details": ["Crispy house-cut fries", "Melted cheddar cheese", "Creamy, gooey texture", "Served hot and fresh"],
+    "tags": ["Cheesy", "Comfort Food"]
+  },
+  {
+    "id": "Guaco-Fries",
+    "name": "Guaco Gideon Fries",
+    "price": 4.75,
+    "category": "Fries",
+    "image": "Guaco Gideon.png",
+    "shortDescription": "Crispy golden fries topped with fresh guacamole, zesty seasoning, and a bold burst of flavor.",
+    "description": "A vibrant twist on a classic—hot, crispy fries loaded with creamy guacamole and finished with fresh, zesty toppings for the perfect balance of crunch and smoothness.",
+    "details": ["Crispy house-cut fries", "Fresh-made guacamole", "Zesty seasoning", "Served hot and fresh"],
+    "tags": ["Fresh", "Savory"]
+  },
+  {
+    "id": "Syler-Fries",
+    "name": "Syler Sweet Potato Fries",
+    "price": 4.25,
+    "category": "Fries",
+    "image": "Syler Sweet Potato.jpg",
+    "shortDescription": "Crispy sweet potato fries with a lightly caramelized exterior and soft, fluffy center.",
+    "description": "Perfectly fried sweet potato fries with a natural sweetness and a satisfying crunch—served hot and seasoned just right for a delicious twist on a classic favorite.",
+    "details": ["Crispy sweet potato fries", "Naturally sweet flavor", "Lightly seasoned", "Served hot and fresh"],
+    "tags": ["Sweet", "Savory"]
+  },
+  {
+    "id": "Seth-Fries",
+    "name": "The Seth Specialty Fries",
+    "price": 6.25,
+    "category": "Fries",
+    "image": "The Seth.jpg",
+    "shortDescription": "The Seth: a loaded basket of crispy fries piled high with jalapeños, bacon, and rich queso.",
+    "description": "A house favorite named after our in-house coding legend—this fully loaded fry basket brings the heat and flavor with melty queso, crispy bacon, and spicy jalapeños on top of golden, crunchy fries.",
+    "details": ["Crispy house-cut fries", "Melted queso", "Crispy bacon", "Sliced jalapeños"],
+    "tags": ["House Favorite", "Loaded"]
   },
   {
     "id": "green-lemonade",
