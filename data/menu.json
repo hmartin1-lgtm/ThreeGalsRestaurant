@@ -147,7 +147,7 @@
     "name": "Soda",
     "price": 2.75,
     "category": "drinks",
-    "image": "Greenlemonade.png",
+    "image": "Normal Soda.png",
     "shortDescription": "A refreshing beverage.",
     "description": "A refreshing soda with a crisp taste and bubbly texture.",
     "details": ["Carbonated water", "Artificial flavors", "Artificial Sweeteners"],
