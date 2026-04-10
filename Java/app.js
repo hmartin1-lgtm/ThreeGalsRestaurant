@@ -222,9 +222,11 @@ async function initOrder() {
   function applyFilters() {
     const q = searchInput.value.trim().toLowerCase();
     const category = categorySelect.value;
+    const normalizedCategory = category.toLowerCase();
     const filtered = menu.filter(item => {
       const matchesText = [item.name, item.shortDescription, item.category].join(' ').toLowerCase().includes(q);
-      const matchesCategory = category === 'all' || item.category === category;
+      const itemCategory = (item.category || '').toLowerCase();
+      const matchesCategory = category === 'all' || itemCategory === normalizedCategory;
       return matchesText && matchesCategory;
     });
     renderMenuCards(filtered, container);
