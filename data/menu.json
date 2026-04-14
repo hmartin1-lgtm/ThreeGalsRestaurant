@@ -478,6 +478,26 @@
     "description": "A flavorful sriracha mayo that combines the heat of sriracha sauce with the creaminess of mayonnaise for a deliciously spicy addition to any dish.",
     "details": ["Mayonnaise", "Sriracha sauce", "Garlic"],
     "tags": ["Condiment", "Spicy"]
+  },
+    {
+    "id": "Extra-Salt",
+    "name": "Extra Salt",
+    "price": 0.00,
+    "category": "Toppings",
+    "shortDescription": "Extra Salt.",
+    "description": "Extra salt to add a savory kick to any dish.",
+    "details": ["Salt"],
+    "tags": ["Condiment", "Savory"]
+  },
+      {
+    "id": "No-Salt",
+    "name": "No Salt",
+    "price": 0.00,
+    "category": "Toppings",
+    "shortDescription": "No Salt.",
+    "description": "No salt for those who prefer a less salty option or have dietary restrictions.",
+    "details": ["No Salt"],
+    "tags": ["Condiment", "Savory"]
   }
 ]
 

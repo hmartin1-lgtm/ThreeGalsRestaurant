@@ -22,7 +22,6 @@
       </a>
       <nav class="nav-links" aria-label="Main navigation">
         <a data-nav href="index.html">Home</a>
-        <a data-nav href="details.html">Details</a>
         <a data-nav href="order.html">Order</a>
         <a data-nav class="bag-pill" href="bag.html">Bag (<span data-bag-count>0</span>)</a>
         <a data-nav href="checkout.html">Checkout</a>
@@ -52,7 +51,8 @@
         <select id="menu-category" class="select">
           <option value="all">All categories</option>
           <option value="burgers">Burgers</option>
-          <option value="sides">Sides</option>
+          <option value="fries">Sides</option>
+          <option value="hot-dogs">Hot Dogs</option>
           <option value="drinks">Drinks</option>
         </select>
       </div>
@@ -61,12 +61,28 @@
   </div>
 </section>
 
+<!-- Toppings Modal -->
+<div id="toppings-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modal-item-name">Customize Your Item</h2>
+    <p id="modal-item-description">Choose your toppings or mix-ins.</p>
+    <div id="modal-toppings-container">
+      <!-- Toppings will be loaded here -->
+    </div>
+    <div class="cta-row" style="margin-top: 2rem;">
+      <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+      <button class="btn btn-primary" id="modal-add-to-cart">Add to Bag</button>
+    </div>
+  </div>
+</div>
+
   </main>
 
   <footer class="footer">
     <div class="container small">
       <span>© 2026 Three Gals. Built with HTML, CSS, and JavaScript.</span>
-      <span><a href="order.html">Start an order</a> · <a href="details.html">View item details</a></span>
+      <span><a href="order.html">Start an order</a></span>
     </div>
   </footer>
 

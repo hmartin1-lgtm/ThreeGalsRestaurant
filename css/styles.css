@@ -119,6 +119,14 @@ button {
 .bag-pill {
   background: var(--green-900);
   color: var(--white) !important;
+  transition: all 0.2s ease;
+}
+
+.bag-pill:hover {
+  background: var(--green-800) !important;
+  color: var(--white) !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(21, 77, 44, 0.3);
 }
 
 .hero {
@@ -459,3 +467,198 @@ button {
 .text-right { text-align: right; }
 
 .hidden { display: none !important; }
+
+/* Toppings styles */
+.toppings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.topping-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.topping-option:hover {
+  border-color: var(--green-700);
+}
+
+.topping-option input[type="checkbox"] {
+  margin-right: 12px;
+  width: 18px;
+  height: 18px;
+}
+
+.topping-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.topping-price {
+  font-weight: 600;
+  color: var(--green-800);
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--green-700);
+}
+
+/* Story section styles */
+.story-layout {
+  align-items: center;
+  gap: var(--gutter);
+}
+
+.story-copy {
+  padding-right: 2rem;
+}
+
+.story-copy .eyebrow {
+  color: var(--green-700);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+}
+
+.story-copy h2 {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.story-copy p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.story-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.story-card {
+  background: linear-gradient(135deg, var(--green-50) 0%, var(--white) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem;
+  max-width: 400px;
+  text-align: center;
+}
+
+.story-quote blockquote {
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--green-800);
+  margin: 0 0 1rem 0;
+  position: relative;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.story-quote blockquote:before {
+  content: '"';
+  font-size: 4rem;
+  color: var(--green-300);
+  position: absolute;
+  top: -0.8rem;
+  left: -1.5rem;
+  font-family: serif;
+  opacity: 0.6;
+}
+
+.story-quote blockquote:after {
+  content: '"';
+  font-size: 4rem;
+  color: var(--green-300);
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  font-family: serif;
+  opacity: 0.6;
+}
+
+.story-quote cite {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: right;
+  display: block;
+  margin-top: 1rem;
+}
+
+.story-image {
+  margin-top: 2rem;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.story-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 1rem;
+  color: white;
+}
+
+.image-overlay p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
