@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Management | Three Gals</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .orders-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      gap: 20px;
+    }
+    
+    .orders-header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+    
+    .logout-btn {
+      background: var(--green-900);
+      color: var(--white);
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+    
+    .logout-btn:hover {
+      transform: translateY(-1px);
+    }
+    
+    .orders-container {
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    .orders-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .orders-container::-webkit-scrollbar-track {
+      background: var(--green-50);
+      border-radius: 10px;
+    }
+    
+    .orders-container::-webkit-scrollbar-thumb {
+      background: var(--green-700);
+      border-radius: 10px;
+    }
+    
+    .orders-container::-webkit-scrollbar-thumb:hover {
+      background: var(--green-900);
+    }
+    
+    .date-group {
+      margin-bottom: 32px;
+    }
+    
+    .date-group-header {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--green-900);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--line);
+    }
+    
+    .order-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .order-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+    
+    .order-id-time {
+      flex: 1;
+    }
+    
+    .order-id {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    
+    .order-time {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    
+    .order-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .status-preparing {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .status-ready {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status-completed {
+      background: #e2e3e5;
+      color: #383d41;
+    }
+    
+    .order-items {
+      margin-bottom: 16px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 0.95rem;
+    }
+    
+    .item-name {
+      color: var(--ink);
+    }
+    
+    .item-qty {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .item-price {
+      color: var(--green-900);
+      font-weight: 700;
+    }
+    
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .order-total {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    
+    .order-total span {
+      color: var(--green-900);
+    }
+    
+    .order-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .action-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      text-transform: uppercase;
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-1px);
+    }
+    
+    .action-btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn-previous {
+      background: var(--line);
+      color: var(--muted);
+    }
+    
+    .btn-previous:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .btn-next {
+      background: var(--green-100);
+      color: var(--green-900);
+    }
+    
+    .btn-next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .btn-pickup {
+      background: var(--green-900);
+      color: var(--white);
+      min-width: 120px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    
+    .empty-state h2 {
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <span>Three Gals · Burgers, fries, and fresh green flavor</span>
+      <span>Orders Management System</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">3G</span>
+        <span>Three Gals</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="orders.html" class="active">Orders</a>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="orders-header">
+          <div>
+            <h1>Orders Management</h1>
+            <p style="color: var(--muted); margin: 8px 0 0;">Total Orders: <span id="totalOrders">0</span></p>
+          </div>
+        </div>
+        
+        <div class="orders-container" id="ordersContainer">
+          <!-- Orders will be loaded here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STATUS_FLOW = ['preparing', 'ready', 'completed'];
+    
+    // Check if user is logged in
+    function checkLoginStatus() {
+      if (!localStorage.getItem('isLoggedIn')) {
+        window.location.href = 'login.html';
+      }
+    }
+    
+    // Load orders from JSON
+    async function loadOrders() {
+      try {
+        const response = await fetch('/data/orders.json');
+        const orders = await response.json();
+        renderOrders(orders);
+        document.getElementById('totalOrders').textContent = orders.length;
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        document.getElementById('ordersContainer').innerHTML = '<div class="empty-state"><h2>Error Loading Orders</h2><p>Unable to load orders data.</p></div>';
+      }
+    }
+    
+    // Group orders by date
+    function groupOrdersByDate(orders) {
+      const grouped = {};
+      
+      orders.forEach(order => {
+        if (!grouped[order.date]) {
+          grouped[order.date] = [];
+        }
+        grouped[order.date].push(order);
+      });
+      
+      return grouped;
+    }
+    
+    // Format date
+    function formatDate(dateString) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString + 'T00:00:00').toLocaleDateString('en-US', options);
+    }
+    
+    // Format time
+    function formatTime(timeString) {
+      const [hours, minutes] = timeString.split(':');
+      const hour = parseInt(hours);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour % 12 || 12;
+      return `${displayHour}:${minutes} ${ampm}`;
+    }
+    
+    // Update order status
+    function updateOrderStatus(orderId, newStatus) {
+      // In a real application, this would send data to the server
+      const orderElement = document.querySelector(`[data-order-id="${orderId}"]`);
+      if (orderElement) {
+        const statusBadge = orderElement.querySelector('.order-status');
+        statusBadge.className = `order-status status-${newStatus}`;
+        statusBadge.innerHTML = `<span>Status: ${newStatus}</span>`;
+        
+        // Update button states
+        updateActionButtons(orderElement, newStatus);
+      }
+    }
+    
+    // Update action button states
+    function updateActionButtons(orderElement, status) {
+      const btnPrevious = orderElement.querySelector('.btn-previous');
+      const btnNext = orderElement.querySelector('.btn-next');
+      const currentStatusIndex = STATUS_FLOW.indexOf(status);
+      
+      // Disable previous if at first status
+      btnPrevious.disabled = currentStatusIndex === 0;
+      
+      // Disable next if at last status
+      btnNext.disabled = currentStatusIndex === STATUS_FLOW.length - 1;
+    }
+    
+    // Move status forward
+    function moveStatusForward(orderId, currentStatus) {
+      const currentIndex = STATUS_FLOW.indexOf(currentStatus);
+      if (currentIndex < STATUS_FLOW.length - 1) {
+        const newStatus = STATUS_FLOW[currentIndex + 1];
+        updateOrderStatus(orderId, newStatus);
+      }
+    }
+    
+    // Move status backward
+    function moveStatusBackward(orderId, currentStatus) {
+      const currentIndex = STATUS_FLOW.indexOf(currentStatus);
+      if (currentIndex > 0) {
+        const newStatus = STATUS_FLOW[currentIndex - 1];
+        updateOrderStatus(orderId, newStatus);
+      }
+    }
+    
+    // Remove order (pickup complete)
+    function removeOrder(orderId) {
+      const orderElement = document.querySelector(`[data-order-id="${orderId}"]`);
+      if (orderElement) {
+        orderElement.style.opacity = '0';
+        orderElement.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+          orderElement.remove();
+          const totalOrders = parseInt(document.getElementById('totalOrders').textContent) - 1;
+          document.getElementById('totalOrders').textContent = totalOrders;
+          
+          // Show empty state if no orders
+          if (totalOrders === 0) {
+            document.getElementById('ordersContainer').innerHTML = '<div class="empty-state"><h2>No Orders</h2><p>All orders have been picked up.</p></div>';
+          }
+        }, 300);
+      }
+    }
+    
+    // Render orders
+    function renderOrders(orders) {
+      const container = document.getElementById('ordersContainer');
+      
+      if (orders.length === 0) {
+        container.innerHTML = '<div class="empty-state"><h2>No Orders</h2><p>There are currently no orders to display.</p></div>';
+        return;
+      }
+      
+      const groupedOrders = groupOrdersByDate(orders);
+      let html = '';
+      
+      // Sort dates in descending order (newest first)
+      const sortedDates = Object.keys(groupedOrders).sort().reverse();
+      
+      sortedDates.forEach(date => {
+        html += `<div class="date-group">
+          <div class="date-group-header">${formatDate(date)}</div>`;
+        
+        groupedOrders[date].forEach(order => {
+          const currentStatusIndex = STATUS_FLOW.indexOf(order.status);
+          const isPreviousDisabled = currentStatusIndex === 0;
+          const isNextDisabled = currentStatusIndex === STATUS_FLOW.length - 1;
+          
+          html += `
+            <div class="order-card" data-order-id="${order.id}">
+              <div class="order-header">
+                <div class="order-id-time">
+                  <div class="order-id">${order.id}</div>
+                  <div class="order-time">${formatTime(order.time)}</div>
+                </div>
+                <div class="order-status status-${order.status}">
+                  <span>Status: ${order.status}</span>
+                </div>
+              </div>
+              
+              <div class="order-items">
+          `;
+          
+          order.items.forEach(item => {
+            html += `
+              <div class="order-item">
+                <div>
+                  <div class="item-name">${item.name}</div>
+                  <div class="item-qty">Qty: ${item.quantity}</div>
+                </div>
+                <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+              </div>
+            `;
+          });
+          
+          html += `
+              </div>
+              
+              <div class="order-footer">
+                <div class="order-total">Total: <span>$${order.total.toFixed(2)}</span></div>
+              </div>
+              
+              <div class="order-actions">
+                <button class="action-btn btn-previous" ${isPreviousDisabled ? 'disabled' : ''} onclick="moveStatusBackward('${order.id}', '${order.status}')">← Previous Status</button>
+                <button class="action-btn btn-next" ${isNextDisabled ? 'disabled' : ''} onclick="moveStatusForward('${order.id}', '${order.status}')">Next Status →</button>
+                <button class="action-btn btn-pickup" onclick="removeOrder('${order.id}')">📦 Picked Up</button>
+              </div>
+            </div>
+          `;
+        });
+        
+        html += '</div>';
+      });
+      
+      container.innerHTML = html;
+    }
+    
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('loginTime');
+      window.location.href = 'login.html';
+    });
+    
+    // Initialize
+    checkLoginStatus();
+    loadOrders();
+  </script>
+</body>
+</html>
