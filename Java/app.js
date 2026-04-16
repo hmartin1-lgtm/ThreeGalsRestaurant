@@ -480,7 +480,7 @@ function initToppings() {
           price: parseFloat(cb.dataset.price)
         }));
         addToCart(item, 1, selected);
-        alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+        //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
         window.location.href = 'bag.html';
       });
     } else {
@@ -509,7 +509,7 @@ function initToppings() {
             price: parseFloat(cb.dataset.price)
           }));
           addToCart(item, 1, selected);
-          alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+          //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
           window.location.href = 'bag.html';
         });
       });
@@ -572,7 +572,7 @@ function showToppingsModal(item) {
         price: parseFloat(cb.dataset.price)
       }));
       addToCart(item, 1, selected);
-      alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+      //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
       closeModal();
     };
   } else {
@@ -614,7 +614,7 @@ function showToppingsModal(item) {
           price: parseFloat(cb.dataset.price)
         }));
         addToCart(item, 1, selected);
-        alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+        //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
         closeModal();
       };
     });
