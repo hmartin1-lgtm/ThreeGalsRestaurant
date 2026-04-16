@@ -1,144 +1,104 @@
-const FALLBACK_MENU = [
-  {
-    id: 'classic-gal',
-    name: 'Classic Gal Burger',
-    price: 10.5,
-    category: 'burgers',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80',
-    shortDescription: 'Double smashed patties, crisp lettuce, tomato, pickles, house green sauce.',
-    description: 'A balanced house burger with juicy beef, toasted bun, and a bright green herb sauce that makes it stand out.',
-    details: ['Two beef patties', 'Green herb sauce', 'Pickles, onion, tomato', 'Served on toasted brioche'],
-    tags: ['Best Seller', 'House Favorite']
-  },
-  {
-    id: 'garden-gal',
-    name: 'Garden Gal Burger',
-    price: 9.75,
-    category: 'burgers',
-    image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80',
-    shortDescription: 'Vegetarian patty, avocado, spinach, pickled onion, lemon aioli.',
-    description: 'A fresh vegetarian option with creamy avocado and a bright finish.',
-    details: ['Vegetarian patty', 'Avocado & spinach', 'Pickled red onion', 'Lemon aioli'],
-    tags: ['Vegetarian', 'Fresh']
-  },
-  {
-    id: 'triple-stack',
-    name: 'Triple Stack',
-    price: 12.25,
-    category: 'burgers',
-    image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=80',
-    shortDescription: 'Three patties, cheddar, grilled onion, jalapeño relish.',
-    description: 'Big flavor and extra height for the hungriest guests.',
-    details: ['Three beef patties', 'Sharp cheddar', 'Grilled onion', 'Jalapeño relish'],
-    tags: ['Big Bite', 'Spicy']
-  },
-  {
-    id: 'green-fries',
-    name: 'Green Herb Fries',
-    price: 4.5,
-    category: 'sides',
-    image: 'https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=900&q=80',
-    shortDescription: 'Crispy fries tossed in parsley, garlic, and parmesan.',
-    description: 'Classic fries with a Three Gals twist.',
-    details: ['Crispy cut fries', 'Parsley & garlic butter', 'Parmesan finish'],
-    tags: ['Side', 'Popular']
-  },
-  {
-    id: 'sparkling-lime',
-    name: 'Sparkling Lime Soda',
-    price: 2.95,
-    category: 'drinks',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80',
-    shortDescription: 'Bright lime soda served ice cold.',
-    description: 'A crisp, refreshing drink that pairs with burgers and fries.',
-    details: ['Fresh lime profile', 'Served chilled', 'Lightly sparkling'],
-    tags: ['Drink', 'Refreshing']
-  },
-  {
-    id: 'mint-shake',
-    name: 'Mint Green Shake',
-    price: 5.25,
-    category: 'drinks',
-    image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=80',
-    shortDescription: 'Creamy vanilla shake with mint and cookie crumble.',
-    description: 'Dessert in a cup, perfect for a treat at the end of your meal.',
-    details: ['Vanilla base', 'Mint flavor', 'Cookie crumble topping'],
-    tags: ['Shake', 'Sweet']
-  }
-];
+const serverName = 'ROG-2';
+const databaseName = 'ThreeGals';
+const usingDatabase = false;
+let currentItem = null;
 
 const STORAGE_KEYS = {
   cart: 'threeGalsCart',
   order: 'threeGalsOrder'
 };
 
-const TOPPINGS = [
-  { id: 'cheese', name: 'Cheese', price: 1.00 },
-  { id: 'bacon', name: 'Bacon', price: 2.00 },
-  { id: 'avocado', name: 'Avocado', price: 1.50 },
-  { id: 'jalapenos', name: 'Jalapeños', price: 0.50 },
-  { id: 'grilled-onions', name: 'Grilled Onions', price: 0.75 },
-  { id: 'extra-patty', name: 'Extra Patty', price: 3.00 },
-  { id: 'lettuce', name: 'Lettuce', price: 0.00 },
-  { id: 'tomato', name: 'Tomato', price: 0.00 },
-  { id: 'onion', name: 'Onion', price: 0.00 },
-  { id: 'pickles', name: 'Pickles', price: 0.00 }
-];
+async function loadMenu(queryString)
+{
+  if (usingDatabase)
+  {
+      const response = await fetch('http://localhost:3000/DatabaseResponse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ serverName, databaseName, queryString })
+    });
 
-const MIX_INS = [
-  { id: 'oreo', name: 'Oreo Crumble', price: 1.00 },
-  { id: 'm&m', name: 'M&M', price: 1.00 },
-  { id: 'peanut-butter', name: 'Peanut Butter', price: 1.50 },
-  { id: 'banana', name: 'Banana', price: 0.75 },
-  { id: 'strawberry', name: 'Strawberry', price: 0.75 },
-  { id: 'chocolate-chips', name: 'Chocolate Chips', price: 1.00 },
-  { id: 'whipped-cream', name: 'Whipped Cream', price: 0.50 }
-];
-
-let currentItem = null;
-
-async function loadMenu() {
-  try {
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+    return await response.json(); // JSON from SQL Server
+  }
+  else // Get everything from the json file
+  {
+    let jsonData = [];
+    let watchingForData = [];
     const response = await fetch('/data/menu.json');
     if (!response.ok) throw new Error('No external menu found');
-    var jsonData = await response.json();
-    return ConvertedJson(jsonData);
-  } catch (error) {
-    return FALLBACK_MENU;
+    jsonData = await response.json();
+    jsonData =  ConvertedJson(jsonData);
+
+    // For specific items, select just those
+    if ( queryString == 'EXEC FeaturedMenu')
+    {      
+      jsonData.forEach(item => {
+        let entry = (item.category == 'burgers' || item.category == 'hot-dogs')
+        if (entry) {
+            watchingForData.push(item);
+        }
+      });
+      jsonData = watchingForData.splice(0,2);
+    }
+    else if ( queryString == 'EXEC AllToppings')
+    {
+      jsonData.forEach(item => {
+        if (item.category == 'Toppings') {
+            watchingForData.push(item);
+        }
+      });
+      jsonData = watchingForData;
+    }
+    else if ( queryString == 'EXEC FullEntreMenu')
+    {
+      jsonData.forEach(item => {
+        let entry = (item.category == 'burgers' || item.category == 'hot-dogs')
+        if (entry) {
+            watchingForData.push(item);
+        }
+      });
+      jsonData = watchingForData;
+    }
+    else if ( queryString == 'EXEC FullMenu')
+    {
+      jsonData.forEach(item => {
+        if (item.category != 'Toppings') {
+            watchingForData.push(item);
+        }
+      });
+      jsonData = watchingForData;
+    }
+    return jsonData;
   }
 }
 
 async function loadToppings() {
   try {
-    const menu = await loadMenu();
-    return menu.filter(item => item.category === 'Toppings').map(item => ({
+    let menu = await loadMenu('EXEC AllToppings');
+    let toppingsList = menu.map(item => ({
       id: item.id,
       name: item.name,
-      price: item.price
+      price: 0.75 //item.price
     }));
+    return toppingsList;
   } catch (error) {
-    // Fallback to hardcoded toppings if menu loading fails
-    return [
-      { id: 'Ketchup', name: 'Ketchup', price: 0.75 },
-      { id: 'Mustard', name: 'Mustard', price: 0.75 },
-      { id: 'Pickles', name: 'Pickles', price: 0.75 },
-      { id: 'Onions', name: 'Onions', price: 0.75 },
-      { id: 'Lettuce', name: 'Lettuce', price: 0.75 },
-      { id: 'Tomato', name: 'Tomato', price: 0.75 },
-      { id: 'Bacon', name: 'Bacon', price: 0.75 },
-      { id: 'Avocado', name: 'Avocado', price: 0.75 }
-    ];
+    return [];
   }
 }
 function ConvertedJson(jsonData) {
   // Convert details and tags from csv format to arrays
   jsonData.forEach(element => {
-     var myDetails = element.details
-     if (myDetails === String) {
+     var myDetails = element.details;
+     var isString = typeof myDetails == 'string';
+     if (isString) {
           element.details = myDetails.split(',')
      }
      myDetails = element.tags
-     if (myDetails === String) {
+     var isString = typeof myDetails == 'string';
+     if (isString) {
           element.tags = myDetails.split(',')
      }
 });
@@ -185,7 +145,7 @@ function handleAddToCart(item) {
     }
   } else {
     addToCart(item);
-    alert(`${item.name} added to bag.`);
+    //alert(`${item.name} added to bag.`);
   }
 }
 
@@ -201,11 +161,14 @@ function cartTotals() {
 }
 
 function renderMenuCards(items, container) {
+  let baseTag = (items.tags || [])
+  let baseClass = baseTag.map(tag => `<span class="tag">${tag}</span>`)
+  let finalTag = baseClass.join('')
   container.innerHTML = items.map(item => `
     <article class="card menu-card">
       <img src="/Images/${item.image}" alt="${item.name}">
       <div class="menu-card-body">
-        <div class="tag-row">${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+        <div class="tag-row">${finalTag}</div>
         <h3>${item.name}</h3>
         <p>${item.shortDescription}</p>
         <div class="price-row">
@@ -221,45 +184,46 @@ function renderMenuCards(items, container) {
 }
 
 async function initHome() {
-  const menu = await loadMenu();
-  const featured = menu.slice(0, 3);
+  let rawJsonData = await loadMenu('EXEC FeaturedMenu');
+  let featured = ConvertedJson(rawJsonData);
   const featuredContainer = document.querySelector('#featured-menu');
   if (!featuredContainer) return;
   renderMenuCards(featured, featuredContainer);
   featuredContainer.querySelectorAll('[data-add-id]').forEach(button => {
     button.addEventListener('click', () => {
-      const item = menu.find(entry => entry.id === button.dataset.addId);
+      const item = featured.find(entry => entry.id === button.dataset.addId);
       handleAddToCart(item);
     });
   });
 }
 
 async function initOrder() {
-  const menu = await loadMenu();
+  const rawJsonData = await loadMenu('EXEC FullMenu');
+  var menu = ConvertedJson(rawJsonData);
   const container = document.querySelector('#order-menu');
   if (!container) return;
 
   const searchInput = document.querySelector('#menu-search');
   const categorySelect = document.querySelector('#menu-category');
 
-  function applyFilters() {
-    const q = searchInput.value.trim().toLowerCase();
-    const category = categorySelect.value;
-    const normalizedCategory = category.toLowerCase();
-    const filtered = menu.filter(item => {
-      const matchesText = [item.name, item.shortDescription, item.category].join(' ').toLowerCase().includes(q);
-      const itemCategory = (item.category || '').toLowerCase();
-      const matchesCategory = category === 'all' || itemCategory === normalizedCategory;
-      return matchesText && matchesCategory;
-    });
-    renderMenuCards(filtered, container);
-    container.querySelectorAll('[data-add-id]').forEach(button => {
-      button.addEventListener('click', () => {
-        const item = menu.find(entry => entry.id === button.dataset.addId);
-        handleAddToCart(item);
-      });
-    });
-  }
+      function applyFilters() {
+        const q = searchInput.value.trim().toLowerCase();
+        const category = categorySelect.value;
+        const normalizedCategory = category.toLowerCase();
+        const filtered = menu.filter(item => {
+            const matchesText = [item.name, item.shortDescription, item.category].join(' ').toLowerCase().includes(q);
+            const itemCategory = (item.category || '').toLowerCase();
+            const matchesCategory = category === 'all' || itemCategory === normalizedCategory;
+            return matchesText && matchesCategory;
+        });
+        renderMenuCards(filtered, container);
+        container.querySelectorAll('[data-add-id]').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = menu.find(entry => entry.id === button.dataset.addId);
+                handleAddToCart(item);
+            });
+        });
+      }
 
   applyFilters();
   searchInput.addEventListener('input', applyFilters);
@@ -269,7 +233,8 @@ async function initOrder() {
 async function initDetails() {
   const target = document.querySelector('#detail-view');
   if (!target) return;
-  const menu = await loadMenu();
+  const rawJsonData = await loadMenu('EXEC FullMenu');
+  const menu = ConvertedJson(rawJsonData);
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id') || menu[0]?.id;
   const item = menu.find(entry => entry.id === id) || menu[0];
@@ -477,7 +442,7 @@ function initToppings() {
     return;
   }
 
-  loadMenu().then(menu => {
+  loadMenu('EXEC AllToppings').then(menu => {
     const item = menu.find(entry => entry.id === id);
     if (!item) {
       window.location.href = 'order.html';
