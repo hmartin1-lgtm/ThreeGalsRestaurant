@@ -1,6 +1,6 @@
 const serverName = 'ROG-2';
 const databaseName = 'ThreeGals';
-const usingDatabase = true;
+const usingDatabase = false;
 let currentItem = null;
 
 const STORAGE_KEYS = {
