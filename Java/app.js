@@ -387,7 +387,6 @@ function initCheckout() {
     localStorage.removeItem(STORAGE_KEYS.cart);
     window.location.href = 'confirmation.html';
   });
-}
 
 function WeatherBug() {
     fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=London&aqi=no')
@@ -413,23 +412,6 @@ function WeatherBug() {
         document.getElementById('weather').innerHTML = output;
       });
     };
-
-function initConfirmation() {
-  const target = document.querySelector('#confirmation-card');
-  if (!target) return;
-  const order = JSON.parse(localStorage.getItem(STORAGE_KEYS.order) || 'null');
-  if (!order) {
-    target.innerHTML = `
-      <div class="empty-state">
-        <h2>No recent order found</h2>
-        <p class="muted">Place an order to see confirmation details here.</p>
-        <div class="cta-row" style="justify-content:center;margin-top:16px;">
-          <a class="btn btn-primary" href="order.html">Start order</a>
-        </div>
-      </div>
-    `;
-    return;
-  }
 
   target.innerHTML = `
     <div class="notice">Demo flow only. No payment is collected on this website.</div>

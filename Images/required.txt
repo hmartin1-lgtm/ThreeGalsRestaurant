@@ -1,4 +1,8 @@
 Syler - make sure features show up
+Syler - index page
+gideon - Orders
+Andrew - details
+Ava - Bag
 
 
 Burgers
