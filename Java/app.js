@@ -391,6 +391,7 @@ function initCheckout() {
 
 function WeatherBug() {
     fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=Denver&aqi=no')
+    fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=London&aqi=no')
     .then((res) => res.json())
     .then((data) => {
         let timeArray = data.location.localtime.split(" ")
@@ -413,6 +414,7 @@ function WeatherBug() {
         document.getElementById('weather').innerHTML = output;
       });
     };
+WeatherBug();
 function initConfirmation() {
   const target = document.querySelector('#confirmation-card');
   if (!target) return;
