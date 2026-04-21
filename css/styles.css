@@ -525,8 +525,7 @@ button {
   background-color: var(--white);
   padding: 20px;
   border-radius: var(--radius);
-  width: 90%;
-  max-width: 500px;
+  width: min(95%, 700px);
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
