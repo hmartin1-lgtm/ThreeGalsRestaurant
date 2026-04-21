@@ -225,7 +225,7 @@
     "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A tangy and savory condiment.",
-    "description": "A classic ketchup that adds a tangy and savory flavor to any dish.",
+    "description": "A classic ketchup that adds a perfect flavor to any dish.",
     "details": ["Tomatoes", "Vinegar", "Sugar", "Spices"],
     "tags": ["Condiment", "Classic"]
   },
@@ -245,7 +245,7 @@
     "price": 0.75,
     "category": "Toppings",
     "shortDescription": "A savory sliced pickle.",
-    "description": "A classic pickled vegetable to add to any dish.",
+    "description": "A classic pickled cucumber to add to any dish.",
     "details": ["Cucumbers", "Vinegar"],
     "tags": ["Condiment", "Classic"]
   },

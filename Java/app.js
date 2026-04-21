@@ -322,22 +322,23 @@ function initBag() {
       </div>
     `;
 
-    cartContainer.querySelectorAll('[data-qty-id]').forEach(button => {
+    cartContainer.querySelectorAll('[data-qty-index]').forEach(button => {
       button.addEventListener('click', () => {
         const cart = getCart();
-        const item = cart.find(entry => entry.id === button.dataset.qtyId);
-        if (!item) return;
-        item.quantity += button.dataset.direction === 'up' ? 1 : -1;
+        const index = parseInt(button.dataset.qtyIndex);
+        cart[index].quantity += button.dataset.direction === 'up' ? 1 : -1;
         const updated = cart.filter(entry => entry.quantity > 0);
         setCart(updated);
         renderBag();
       });
     });
-
-    cartContainer.querySelectorAll('[data-remove-id]').forEach(button => {
+    
+    cartContainer.querySelectorAll('[data-remove-index]').forEach(button => {
       button.addEventListener('click', () => {
-        const updated = getCart().filter(entry => entry.id !== button.dataset.removeId);
-        setCart(updated);
+        const cart = getCart();
+        const index = parseInt(button.dataset.removeIndex);
+        cart.splice(index, 1);
+        setCart(cart);
         renderBag();
       });
     });
