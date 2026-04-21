@@ -1,6 +1,6 @@
 const serverName = 'ROG-2';
 const databaseName = 'ThreeGals';
-const usingDatabase = false;
+const usingDatabase = true;
 let currentItem = null;
 
 const STORAGE_KEYS = {
@@ -388,7 +388,41 @@ function initCheckout() {
     window.location.href = 'confirmation.html';
   });
 }
+<<<<<<< Updated upstream
 
+function WeatherBug() {
+    fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=Denver&aqi=no')
+=======
+function WeatherBug() {
+    fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=London&aqi=no')
+>>>>>>> Stashed changes
+    .then((res) => res.json())
+    .then((data) => {
+        let timeArray = data.location.localtime.split(" ")
+        let output = `<br /><div>
+                         <br />
+                           <div>
+                            At ${timeArray[1]} on ${timeArray[0]} in ${data.location.name},
+                    ${data.location.region}, the temperature is ${data.current.temp_f} F `
+        if (data.current.wind_mph == 0) {
+            output += `with no wind`
+        }
+        else {
+            output += `with the wind from the ${data.current.wind_dir} at
+                            ${data.current.wind_mph} mph`
+        }
+        output += `</div></div>
+                      <br />
+                      <a href="https://www.weatherapi.com/" title="Free Weather API"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
+                      <br />Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>            `;
+        document.getElementById('weather').innerHTML = output;
+      });
+    };
+<<<<<<< Updated upstream
+
+=======
+WeatherBug();
+>>>>>>> Stashed changes
 function initConfirmation() {
   const target = document.querySelector('#confirmation-card');
   if (!target) return;
