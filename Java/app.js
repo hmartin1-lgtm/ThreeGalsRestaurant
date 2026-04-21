@@ -539,12 +539,9 @@ function showToppingsModal(item) {
   itemNameEl.textContent = `Customize ${item.name}`;
   itemDescEl.textContent = item.shortDescription;
 
-  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
-  
-  if (isShake) {
-    // Use hardcoded mix-ins for shakes
-    const options = MIX_INS;
-    const title = 'Mix-Ins';
+  // Load toppings from menu.json for all customizable items
+  loadToppings().then(options => {
+    const title = item.category === 'drinks' ? 'Mix-Ins' : 'Toppings';
 
     container.innerHTML = `
       <h3>${title}</h3>
@@ -583,50 +580,7 @@ function showToppingsModal(item) {
       //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
       closeModal();
     };
-  } else {
-    // Load toppings from menu.json for burgers/hot dogs
-    loadToppings().then(options => {
-      const title = 'Toppings';
-
-      container.innerHTML = `
-        <h3>${title}</h3>
-        <p>Select any ${title.toLowerCase()} you'd like to add.</p>
-        <div class="toppings-grid">
-          ${options.map(option => `
-            <label class="topping-option">
-              <input type="checkbox" data-id="${option.id}" data-price="${option.price}">
-              <span class="topping-name">${option.name}</span>
-              <span class="topping-price">${option.price > 0 ? money(option.price) : 'Free'}</span>
-            </label>
-          `).join('')}
-        </div>
-      `;
-
-      modal.style.display = 'flex';
-
-      const closeModal = () => {
-        modal.style.display = 'none';
-        currentItem = null;
-      };
-
-      cancelBtn.onclick = closeModal;
-      closeBtn.onclick = closeModal;
-      modal.onclick = (e) => {
-        if (e.target === modal) closeModal();
-      };
-
-      addBtn.onclick = () => {
-        const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
-          id: cb.dataset.id,
-          name: options.find(o => o.id === cb.dataset.id).name,
-          price: parseFloat(cb.dataset.price)
-        }));
-        addToCart(item, 1, selected);
-        //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
-        closeModal();
-      };
-    });
-  }
+  });
 }
 
 function initApp() {
