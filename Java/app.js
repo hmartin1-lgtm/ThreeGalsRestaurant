@@ -413,6 +413,7 @@ function WeatherBug() {
         document.getElementById('weather').innerHTML = output;
       });
     };
+WeatherBug();
 function initConfirmation() {
   const target = document.querySelector('#confirmation-card');
   if (!target) return;
