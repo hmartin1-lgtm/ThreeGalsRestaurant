@@ -412,11 +412,7 @@ function WeatherBug() {
         document.getElementById('weather').innerHTML = output;
       });
     };
-<<<<<<< Updated upstream
-
-=======
 WeatherBug();
->>>>>>> Stashed changes
 function initConfirmation() {
   const target = document.querySelector('#confirmation-card');
   if (!target) return;
