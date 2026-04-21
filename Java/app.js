@@ -1,6 +1,6 @@
 const serverName = 'ROG-2';
 const databaseName = 'ThreeGals';
-const usingDatabase = true;
+const usingDatabase = false;
 let currentItem = null;
 
 const STORAGE_KEYS = {
@@ -388,14 +388,9 @@ function initCheckout() {
     window.location.href = 'confirmation.html';
   });
 }
-<<<<<<< Updated upstream
 
 function WeatherBug() {
     fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=Denver&aqi=no')
-=======
-function WeatherBug() {
-    fetch('https://api.weatherapi.com/v1/current.json?key=3a4515825e3c433f8dc40901220203&q=London&aqi=no')
->>>>>>> Stashed changes
     .then((res) => res.json())
     .then((data) => {
         let timeArray = data.location.localtime.split(" ")
@@ -418,11 +413,6 @@ function WeatherBug() {
         document.getElementById('weather').innerHTML = output;
       });
     };
-<<<<<<< Updated upstream
-
-=======
-WeatherBug();
->>>>>>> Stashed changes
 function initConfirmation() {
   const target = document.querySelector('#confirmation-card');
   if (!target) return;
