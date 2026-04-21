@@ -412,8 +412,7 @@ function WeatherBug() {
                       <br />Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>            `;
         document.getElementById('weather').innerHTML = output;
       });
-    };
-<<<<<<< HEAD
+};
     
 function initConfirmation() {
   const target = document.querySelector('#confirmation-card');
@@ -431,8 +430,6 @@ function initConfirmation() {
     `;
     return;
   }
-=======
->>>>>>> 0f82b0c3b6941756da3703dd0540b93e199ef4a1
 
   target.innerHTML = `
     <div class="notice">Demo flow only. No payment is collected on this website.</div>

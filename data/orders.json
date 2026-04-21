@@ -1,6 +1,7 @@
 [
   {
     "id": "ORD-001",
+    "ticket":"01",
     "date": "2024-04-12",
     "time": "14:30",
     "items": [
@@ -12,6 +13,7 @@
   },
   {
     "id": "ORD-002",
+    "ticket":"02",
     "date": "2024-04-12",
     "time": "15:45",
     "items": [
@@ -23,6 +25,7 @@
   },
   {
     "id": "ORD-003",
+    "ticket":"03",
     "date": "2024-04-11",
     "time": "12:15",
     "items": [
@@ -35,6 +38,7 @@
   },
   {
     "id": "ORD-004",
+    "ticket":"04",
     "date": "2024-04-11",
     "time": "18:20",
     "items": [
@@ -46,6 +50,7 @@
   },
   {
     "id": "ORD-005",
+    "ticket":"05",
     "date": "2024-04-10",
     "time": "11:30",
     "items": [
@@ -56,11 +61,12 @@
     "status": "completed"
   },
   {
-    "id": "ORD-006",
+    "id": "006",
+    "ticket":"06",
     "date": "2024-04-10",
     "time": "16:00",
     "items": [
-      { "name": "Klassic Kenna Burger", "quantity": 1, "price": 9.50 }
+      { "name": "Klassic Kenna Burger", "quantity": 1, "price": 9.50, "topping":"Ketchup,Mustard" }
     ],
     "total": 9.50,
     "status": "preparing"
