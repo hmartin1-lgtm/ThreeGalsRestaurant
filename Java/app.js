@@ -52,6 +52,15 @@ async function loadMenu(queryString)
       });
       jsonData = watchingForData;
     }
+    else if ( queryString == 'EXEC AllMixIns')
+    {
+      jsonData.forEach(item => {
+        if (item.category == 'Mix-ins') {
+            watchingForData.push(item);
+        }
+      });
+      jsonData = watchingForData;
+    }
     else if ( queryString == 'EXEC FullEntreMenu')
     {
       jsonData.forEach(item => {
@@ -65,7 +74,7 @@ async function loadMenu(queryString)
     else if ( queryString == 'EXEC FullMenu')
     {
       jsonData.forEach(item => {
-        if (item.category != 'Toppings') {
+        if (item.category != 'Toppings' && item.category != 'Mix-ins') {
             watchingForData.push(item);
         }
       });
@@ -81,9 +90,23 @@ async function loadToppings() {
     let toppingsList = menu.map(item => ({
       id: item.id,
       name: item.name,
-      price: 0.75 //item.price
+      price: item.price
     }));
     return toppingsList;
+  } catch (error) {
+    return [];
+  }
+}
+
+async function loadMixIns() {
+  try {
+    let menu = await loadMenu('EXEC AllMixIns');
+    let mixInsList = menu.map(item => ({
+      id: item.id,
+      name: item.name,
+      price: item.price
+    }));
+    return mixInsList;
   } catch (error) {
     return [];
   }
@@ -481,33 +504,34 @@ function initToppings() {
     const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
     
     if (isShake) {
-      // Use hardcoded mix-ins for shakes
-      const options = MIX_INS;
-      const title = 'Mix-Ins';
+      // Load mix-ins from menu.json for shakes
+      loadMixIns().then(options => {
+        const title = 'Mix-Ins';
 
-      container.innerHTML = `
-        <h3>${title}</h3>
-        <p>Select any ${title.toLowerCase()} you'd like to add.</p>
-        <div class="toppings-grid">
-          ${options.map(option => `
-            <label class="topping-option">
-              <input type="checkbox" data-id="${option.id}" data-price="${option.price}">
-              <span class="topping-name">${option.name}</span>
-              <span class="topping-price">${option.price > 0 ? money(option.price) : 'Free'}</span>
-            </label>
-          `).join('')}
-        </div>
-      `;
+        container.innerHTML = `
+          <h3>${title}</h3>
+          <p>Select any ${title.toLowerCase()} you'd like to add.</p>
+          <div class="toppings-grid">
+            ${options.map(option => `
+              <label class="topping-option">
+                <input type="checkbox" data-id="${option.id}" data-price="${option.price}">
+                <span class="topping-name">${option.name}</span>
+                <span class="topping-price">${option.price > 0 ? money(option.price) : 'Free'}</span>
+              </label>
+            `).join('')}
+          </div>
+        `;
 
-      addBtn.addEventListener('click', () => {
-        const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
-          id: cb.dataset.id,
-          name: options.find(o => o.id === cb.dataset.id).name,
-          price: parseFloat(cb.dataset.price)
-        }));
-        addToCart(item, 1, selected);
-        //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
-        window.location.href = 'bag.html';
+        addBtn.addEventListener('click', () => {
+          const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
+            id: cb.dataset.id,
+            name: options.find(o => o.id === cb.dataset.id).name,
+            price: parseFloat(cb.dataset.price)
+          }));
+          addToCart(item, 1, selected);
+          //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
+          window.location.href = 'bag.html';
+        });
       });
     } else {
       // Load toppings from menu.json for burgers/hot dogs
@@ -557,9 +581,14 @@ function showToppingsModal(item) {
   itemNameEl.textContent = `Customize ${item.name}`;
   itemDescEl.textContent = item.shortDescription;
 
-  // Load toppings from menu.json for all customizable items
-  loadToppings().then(options => {
-    const title = item.category === 'drinks' ? 'Mix-Ins' : 'Toppings';
+  // Determine if it's a shake
+  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
+
+  // Load appropriate options based on item type
+  const loadOptions = isShake ? loadMixIns() : loadToppings();
+  
+  loadOptions.then(options => {
+    const title = isShake ? 'Mix-Ins' : 'Toppings';
 
     container.innerHTML = `
       <h3>${title}</h3>
