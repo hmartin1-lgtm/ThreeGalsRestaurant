@@ -445,7 +445,8 @@ function initConfirmation() {
       <a class="btn btn-secondary" href="index.html">Back home</a>
     </div>
   `;
-  
+}
+
 function setActiveNav() {
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('[data-nav]').forEach(link => {
