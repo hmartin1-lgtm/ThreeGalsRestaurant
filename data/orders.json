@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ORD-001",
+    "ticket":"01",
+    "orderNumber":1,
+    "customerName":"Abe",
+    "date": "2024-04-12",
+    "time": "14:30",
+    "items": [
+      { "name": "Klassic Kenna Burger", "quantity": 2, "Toppings": "Ketchup,Lettuce", "price": 9.50 },
+      { "name": "Crispy Fries", "quantity": 1, "price": 4.50 }
+    ],
+    "total": 23.50,
+    "status": "ready"
+  },
+  {
+    "id": "ORD-002",
+    "ticket":"02",
+    "orderNumber":2,
+    "customerName":"Belle",
+    "date": "2024-04-12",
+    "time": "15:45",
+    "items": [
+      { "name": "PB + Java Burger", "quantity": 1, "price": 9.75 },
+      { "name": "Garden Fresh Salad", "quantity": 1, "price": 8.50 }
+    ],
+    "total": 18.25,
+    "status": "preparing"
+  },
+  {
+    "id": "ORD-003",
+    "ticket":"03",
+    "orderNumber":3,
+    "customerName":"Carson",
+    "date": "2024-04-11",
+    "time": "12:15",
+    "items": [
+      { "name": "Klassic Kenna Burger", "quantity": 3, "Toppings":"Lettuce,Pickles,Onions", "price": 9.50 },
+      { "name": "Crispy Fries", "quantity": 2, "price": 4.50 },
+      { "name": "Milkshake", "quantity": 3, "Toppings":"Chocolate Syrup", "price": 6.00 }
+    ],
+    "total": 53.00,
+    "status": "completed"
+  },
+  {
+    "id": "ORD-004",
+    "ticket":"04",
+    "orderNumber":4,
+    "customerName":"Debbie",
+    "date": "2024-04-11",
+    "time": "18:20",
+    "items": [
+      { "name": "Spicy Green Burger", "quantity": 1, "Toppings":"Bacon,Avocado", "price": 10.25 },
+      { "name": "Garden Fresh Salad", "quantity": 1, "price": 8.50 }
+    ],
+    "total": 18.75,
+    "status": "ready"
+  },
+  {
+    "id": "ORD-005",
+    "ticket":"05",
+    "orderNumber":5,
+    "customerName":"Edgar",
+    "date": "2024-04-10",
+    "time": "11:30",
+    "items": [
+      { "name": "PB + Java Burger", "quantity": 2, "price": 9.75 },
+      { "name": "Crispy Fries", "quantity": 2, "price": 4.50 }
+    ],
+    "total": 28.50,
+    "status": "completed"
+  },
+  {
+    "id": "006",
+    "ticket":"06",
+    "orderNumber":6,
+    "customerName":"Flower",
+    "date": "2024-04-10",
+    "time": "16:00",
+    "items": [
+      { "name": "Klassic Kenna Burger", "quantity": 1, "price": 9.50, "topping":"Ketchup,Mustard" }
+    ],
+    "total": 9.50,
+    "status": "preparing"
+  }
+]
