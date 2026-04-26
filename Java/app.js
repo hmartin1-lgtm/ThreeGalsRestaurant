@@ -151,17 +151,52 @@ async function loadMenu(queryString)
   }
 }
 
-async function loadToppings() {
-  try {
-    let menu = await loadMenu('EXEC AllToppings');
-    let toppingsList = menu.map(item => ({
-      id: item.id,
-      name: item.name,
-      price: item.price
-    }));
-    return toppingsList;
-  } catch (error) {
-    return [];
+// Database function to add all items to the database one at a time
+async function addMenuItems(order, number)
+{
+  if (usingDatabase)
+  {
+    insureDatabaseOrder();
+    
+    let listing = order.cart;
+    if ( number < listing.length)
+    {
+      let item = listing[number]
+      let toppings = item.addIns && item.addIns.length ? `${item.addIns.map(a => a.name).join(', ')}` : ''
+      let itemData = `EXEC AddMenuItem ${currentOrder}, '${item.name}', ${item.quantity}, '${toppings}'`
+      let response = await loadMenu(itemData)
+      addMenuItem(order, number+1)
+      currentOrder = null;
+    }
+    else if ( len(listing) > 0)
+    {   
+       let command = `EXEC StartOrder ${currentOrder} ${order.customer.firstName}`
+       let response = await loadMenu(command)
+       let jsonObject = response[0]
+       order.ticket = jsonObject.TicketNumber;
+    }
+  }
+  else
+  {
+      currentOrder = null;
+      order.ticket = 99;
+  }
+}
+// Database fuction to insure there is a currentOrder
+async function insureDatabaseOrder()
+{ 
+  if (usingDatabase)
+  {
+      if (  currentOrder == null)
+      {    
+        let response = await loadMenu('EXEC MakeNewOrder')
+        let jsonObject = response[0];
+        currentOrder = jsonObject.OrderID;
+      }
+  }  
+  else
+  {
+    currentOrder = 1
   }
 }
 
@@ -296,7 +331,7 @@ function DecodeOrders(jsonOrders)
   return orderList;
 }
 
-//////////////////////
+ 
 
 async function loadToppings() {
   try {
@@ -780,14 +815,9 @@ function showToppingsModal(item) {
   itemNameEl.textContent = `Customize ${item.name}`;
   itemDescEl.textContent = item.shortDescription;
 
-  // Determine if it's a shake
-  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
-
-  // Load appropriate options based on item type
-  const loadOptions = isShake ? loadMixIns() : loadToppings();
-  
-  loadOptions.then(options => {
-    const title = isShake ? 'Mix-Ins' : 'Toppings';
+  // Load toppings from menu.json for all customizable items
+  loadToppings().then(options => {
+    const title = item.category === 'drinks' ? 'Mix-Ins' : 'Toppings';
 
     container.innerHTML = `
       <h3>${title}</h3>
@@ -827,6 +857,31 @@ function showToppingsModal(item) {
       closeModal();
     };
   });
+}
+function showOrderedItemModal(item) {
+  const modal = document.querySelector('#orderedItem-modal'); 
+  const orderedItemName = document.querySelector('#modal-ordered-item-name');
+  const container = document.querySelector('#modal-ordered-container');
+  const okBtn = document.querySelector('#modal-ok');
+  const closeBtn = modal.querySelector('.close');
+
+  if (!modal || !orderedItemName || !container || !closeBtn || !okBtn) return;
+
+  orderedItemName.textContent = `Ordered ${item.name}`;
+  container.innerHTML = `<h3>${item.name} is in the Bag!</h3>`;
+
+  modal.style.display = 'flex';
+
+  const closeModal = () => {
+      modal.style.display = 'none';
+      currentItem = null;
+    };
+
+  closeBtn.onclick = closeModal;
+  okBtn.onclick = closeModal;
+  modal.onclick = (e) => {
+      if (e.target === modal) closeModal();
+  };
 }
 
 function initApp() {
