@@ -222,17 +222,17 @@
   {
     "id": "Ketchup",
     "name": "Ketchup",
-    "price": 0.75,
+    "price": 0.00,
     "category": "Toppings",
     "shortDescription": "A tangy and savory condiment.",
-    "description": "A classic ketchup that adds a tangy and savory flavor to any dish.",
+    "description": "A classic ketchup that adds a perfect flavor to any dish.",
     "details": ["Tomatoes", "Vinegar", "Sugar", "Spices"],
     "tags": ["Condiment", "Classic"]
   },
   {
     "id": "Mustard",
     "name": "Mustard",
-    "price": 0.75,
+    "price": 0.00,
     "category": "Toppings",
     "shortDescription": "A tangy and savory condiment.",
     "description": "A classic mustard that adds a tangy flavor to any dish.",
@@ -242,17 +242,17 @@
   {
     "id": "Pickles",
     "name": "Pickles",
-    "price": 0.75,
+    "price": 0.50,
     "category": "Toppings",
     "shortDescription": "A savory sliced pickle.",
-    "description": "A classic pickled vegetable to add to any dish.",
+    "description": "A classic pickled cucumber to add to any dish.",
     "details": ["Cucumbers", "Vinegar"],
     "tags": ["Condiment", "Classic"]
   },
   {
     "id": "Onions",
     "name": "Onions",
-    "price": 0.75,
+    "price": 0.50,
     "category": "Toppings",
     "shortDescription": "Sliced onions.",
     "description": "Fresh sliced onions to add a crisp and flavorful bite to any dish.",
@@ -262,7 +262,7 @@
   {
     "id": "Lettuce",
     "name": "Lettuce",
-    "price": 0.75,
+    "price": 0.50,
     "category": "Toppings",
     "shortDescription": "Fresh lettuce leaves.",
     "description": "Crisp and fresh lettuce leaves to add a refreshing crunch to any dish.",
@@ -272,7 +272,7 @@
   {
     "id": "Tomato",
     "name": "Tomato",
-    "price": 0.75,
+    "price": 0.50,
     "category": "Toppings",
     "shortDescription": "Sliced tomatoes.",
     "description": "Juicy and ripe sliced tomatoes to add a burst of flavor and freshness to any dish.",
@@ -282,7 +282,7 @@
   {
     "id": "Bacon",
     "name": "Bacon",
-    "price": 0.75,
+    "price": 1.50,
     "category": "Toppings",
     "shortDescription": "Crispy bacon strips.",
     "description": "Savory and crispy bacon strips to add a smoky flavor and satisfying crunch to any dish.",
@@ -292,7 +292,7 @@
   {
     "id": "Avocado",
     "name": "Avocado",
-    "price": 0.75,
+    "price": 1.75,
     "category": "Toppings",
     "shortDescription": "Creamy avocado slices.",
     "description": "Rich and creamy avocado slices to add a smooth texture and buttery flavor to any dish.",
@@ -312,7 +312,7 @@
   {
     "id": "Green-Herb-Sauce",
     "name": "Green Herb Sauce",
-    "price": 0.75,
+    "price": 0.50,
     "category": "Toppings",
     "shortDescription": "A vibrant green sauce made with fresh herbs.",
     "description": "A zesty and flavorful green herb sauce made with a blend of fresh herbs, perfect for adding a burst of freshness to any dish.",
@@ -332,7 +332,7 @@
   {
     "id": "BBQ-Sauce",
     "name": "BBQ Sauce",
-    "price": 0.75,
+    "price": 0.50,
     "category": "Toppings",
     "shortDescription": "A smoky and tangy barbecue sauce.",
     "description": "A flavorful barbecue sauce with a perfect balance of smoky, tangy, and sweet notes to enhance any dish.",
@@ -342,7 +342,7 @@
   {
     "id": "Peanut-Butter-Glaze",
     "name": "Peanut Butter Glaze",
-    "price": 0.75,
+    "price": 1.00,
     "category": "Toppings",
     "shortDescription": "A sweet and savory peanut butter glaze.",
     "description": "A rich and flavorful peanut butter glaze that adds a perfect balance of sweetness and savoriness to any dish.",
@@ -352,7 +352,7 @@
   {
     "id": "Espresso-BBQ-Sauce",
     "name": "Espresso BBQ Sauce",
-    "price": 0.75,
+    "price": 1.00,
     "category": "Toppings",
     "shortDescription": "A bold and smoky espresso-infused barbecue sauce.",
     "description": "A robust and flavorful barbecue sauce infused with rich espresso for a unique and bold taste that enhances any dish.",
@@ -363,7 +363,7 @@
     "id": "Chocolate Syrup",
     "name": "Chocolate Syrup",
     "price": 0.75,
-    "category": "Toppings",
+    "category": "Mix-ins",
     "shortDescription": "A sweet and rich chocolate syrup.",
     "description": "A decadent and flavorful chocolate syrup that adds a rich, indulgent touch to any dish.",
     "details": ["Chocolate", "Milk", "Sugar"],
@@ -372,7 +372,7 @@
   {
     "id": "Lemon Aioli",
     "name": "Lemon Aioli",
-    "price": 0.75,
+    "price": 1.00,
     "category": "Toppings",
     "shortDescription": "A zesty and creamy lemon aioli.",
     "description": "A bright and flavorful lemon aioli made with fresh lemon juice and creamy mayonnaise, perfect for adding a tangy kick to any dish.",
@@ -382,7 +382,7 @@
   {
     "id": "Hot-Honey",
     "name": "Hot Honey",
-    "price": 0.75,
+    "price": 1.00,
     "category": "Toppings",
     "shortDescription": "A sweet and spicy hot honey sauce.",
     "description": "A deliciously addictive hot honey sauce that combines the sweetness of honey with a fiery kick of chili peppers, perfect for drizzling over fries, burgers, or anything you want to add a sweet and spicy twist to.",
@@ -392,7 +392,7 @@
   {
     "id": "Onion-Rings",
     "name": "Onion Rings",
-    "price": 0.75,
+    "price": 1.50,
     "category": "Toppings",
     "shortDescription": "Crispy fried onion rings.",
     "description": "Golden and crispy onion rings that add a satisfying crunch and savory flavor to any dish.",
@@ -402,7 +402,7 @@
   {
     "id": "Gluten-Free-Bun",
     "name": "Gluten-Free Bun",
-    "price": 0.75,
+    "price": 2.00,
     "category": "Toppings",
     "shortDescription": "A soft and delicious gluten-free bun.",
     "description": "A tasty and satisfying gluten-free bun that provides a perfect base for any burger without compromising on flavor or texture.",
@@ -412,7 +412,7 @@
   {
     "id": "Brioche-Bun",
     "name": "Brioche Bun",
-    "price": 0.75,
+    "price": 1.50,
     "category": "Toppings",
     "shortDescription": "A soft and buttery brioche bun.",
     "description": "A rich and fluffy brioche bun that adds a touch of indulgence and a perfect balance of sweetness to any burger.",
@@ -422,7 +422,7 @@
   {
     "id": "Lettuce-Wrap",
     "name": "Lettuce Wrap",
-    "price": 0.75,
+    "price": 0.00,
     "category": "Toppings",
     "shortDescription": "A fresh and crisp lettuce wrap.",
     "description": "A light and refreshing lettuce wrap that provides a low-carb alternative to traditional buns while adding a crisp texture and fresh flavor to any burger.",
@@ -433,7 +433,7 @@
     "id": "Caramel Syrup",
     "name": "Caramel Syrup",
     "price": 0.75,
-    "category": "Toppings",
+    "category": "Mix-ins",
     "shortDescription": "A sweet and rich caramel syrup.",
     "description": "A decadent and flavorful caramel syrup that adds a rich, indulgent touch to any dish.",
     "details": ["Caramel", "Milk", "Sugar"],
@@ -462,7 +462,7 @@
   {
     "id": "Blue-Cheese-Dressing",
     "name": "Blue Cheese Dressing",
-    "price": 0.75,
+    "price": 1.00,
     "category": "Toppings",
     "shortDescription": "A creamy and tangy blue cheese dressing.",
     "description": "A rich and flavorful blue cheese dressing that combines creamy mayonnaise with tangy blue cheese crumbles for a delicious addition to any dish.",
@@ -498,6 +498,146 @@
     "description": "No salt for those who prefer a less salty option or have dietary restrictions.",
     "details": ["No Salt"],
     "tags": ["Condiment", "Savory"]
+  },
+  {
+    "id": "mixin-oreo",
+    "name": "Oreo Crumbles",
+    "price": 1.00,
+    "category": "Mix-ins",
+    "shortDescription": "Crushed Oreo cookies for extra crunch.",
+    "description": "Classic crushed Oreo cookies that add a delicious chocolatey crunch to your shake.",
+    "details": ["Oreo cookies", "Crunchy texture"],
+    "tags": ["Mix-in", "Classic"]
+  },
+  {
+    "id": "mixin-chocolate-chips",
+    "name": "Chocolate Chips",
+    "price": 0.75,
+    "category": "Mix-ins",
+    "shortDescription": "Mini chocolate chips for extra chocolatey goodness.",
+    "description": "Sweet and bite-sized mini chocolate chips that melt in your mouth.",
+    "details": ["Mini chocolate chips", "Melty texture"],
+    "tags": ["Mix-in", "Indulgent"]
+  },
+  {
+    "id": "mixin-caramel",
+    "name": "Caramel Swirl",
+    "price": 0.75,
+    "category": "Mix-ins",
+    "shortDescription": "Rich caramel sauce swirled throughout.",
+    "description": "Smooth and creamy caramel sauce that adds a sweet, buttery flavor.",
+    "details": ["Caramel sauce", "Swirled"],
+    "tags": ["Mix-in", "Sweet"]
+  },
+  {
+    "id": "mixin-strawberry",
+    "name": "Fresh Strawberries",
+    "price": 1.25,
+    "category": "Mix-ins",
+    "shortDescription": "Fresh strawberry slices for fruity flavor.",
+    "description": "Sweet and juicy strawberry slices that add a fresh fruit taste.",
+    "details": ["Fresh strawberries", "Fruit"],
+    "tags": ["Mix-in", "Fresh"]
+  },
+  {
+    "id": "mixin-banana",
+    "name": "Fresh Banana",
+    "price": 1.00,
+    "category": "Mix-ins",
+    "shortDescription": "Fresh banana slices for creamy sweetness.",
+    "description": "Ripe banana slices that add natural sweetness and creamy texture.",
+    "details": ["Fresh banana", "Fruit"],
+    "tags": ["Mix-in", "Fresh"]
+  },
+  {
+    "id": "mixin-peanut-butter",
+    "name": "Peanut Butter",
+    "price": 0.50,
+    "category": "Mix-ins",
+    "shortDescription": "Creamy peanut butter for nutty richness.",
+    "description": "Smooth and creamy peanut butter that adds protein and rich nutty flavor.",
+    "details": ["Peanut butter", "Creamy"],
+    "tags": ["Mix-in", "Protein"]
+  },
+  {
+    "id": "mixin-almond",
+    "name": "Almond Butter",
+    "price": 1.00,
+    "category": "Mix-ins",
+    "shortDescription": "Smooth almond butter for a nutty twist.",
+    "description": "Creamy almond butter that adds a subtle nutty flavor with health benefits.",
+    "details": ["Almond butter", "Creamy"],
+    "tags": ["Mix-in", "Healthy"]
+  },
+  {
+    "id": "mixin-whipped-cream",
+    "name": "Whipped Cream",
+    "price": 0.25,
+    "category": "Mix-ins",
+    "shortDescription": "Light and fluffy whipped cream topping.",
+    "description": "Freshly whipped cream that adds a light, airy finish to your shake.",
+    "details": ["Whipped cream", "Light"],
+    "tags": ["Mix-in", "Classic"]
+  },
+  {
+    "id": "mixin-marshmallows",
+    "name": "Mini Marshmallows",
+    "price": 0.75,
+    "category": "Mix-ins",
+    "shortDescription": "Fluffy mini marshmallows for extra sweetness.",
+    "description": "Soft and sweet mini marshmallows that add a fun texture.",
+    "details": ["Mini marshmallows", "Fluffy"],
+    "tags": ["Mix-in", "Fun"]
+  },
+  {
+    "id": "mixin-coconut",
+    "name": "Toasted Coconut",
+    "price": 0.50,
+    "category": "Mix-ins",
+    "shortDescription": "Toasted coconut flakes for tropical flavor.",
+    "description": "Sweet and toasted coconut flakes that add a tropical crunch.",
+    "details": ["Toasted coconut", "Crunchy"],
+    "tags": ["Mix-in", "Tropical"]
+  },
+  {
+    "id": "mixin-raspberry",
+    "name": "Fresh Raspberries",
+    "price": 1.25,
+    "category": "Mix-ins",
+    "shortDescription": "Fresh raspberry pieces for tart sweetness.",
+    "description": "Bright and tangy fresh raspberries that add a burst of flavor.",
+    "details": ["Fresh raspberries", "Fruit"],
+    "tags": ["Mix-in", "Fresh"]
+  },
+  {
+    "id": "mixin-nutella",
+    "name": "Nutella",
+    "price": 0.50,
+    "category": "Mix-ins",
+    "shortDescription": "Rich hazelnut chocolate spread.",
+    "description": "Creamy Nutella that adds decadent hazelnut chocolate flavor.",
+    "details": ["Hazelnut chocolate", "Creamy"],
+    "tags": ["Mix-in", "Indulgent"]
+  },
+  {
+    "id": "mixin-espresso",
+    "name": "Espresso Shot",
+    "price": 1.00,
+    "category": "Mix-ins",
+    "shortDescription": "A shot of espresso for coffee kick.",
+    "description": "Rich espresso shot that adds bold coffee flavor and energy.",
+    "details": ["Espresso", "Coffee"],
+    "tags": ["Mix-in", "Energizing"]
+  },
+  {
+    "id": "mixin-cinnamon",
+    "name": "Cinnamon",
+    "price": 0.25,
+    "category": "Mix-ins",
+    "shortDescription": "Warm cinnamon spice.",
+    "description": "A dash of warm cinnamon that adds cozy spice flavor.",
+    "details": ["Cinnamon", "Spice"],
+    "tags": ["Mix-in", "Warm"]
   }
 ]
 
