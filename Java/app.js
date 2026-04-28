@@ -1,15 +1,69 @@
-const serverName = 'HANNAHELISE05'; // Change to your server name if using database connection (and ensure CORS is configured properly on the server)
-const databaseName = 'ThreeGalsDatabase'; // Change to your database name if using database connection
-const usingDatabase = false; // Set to true to enable database connection, false to load from local JSON file
-let currentItem = null; // Store the currently selected item for customization in the modal
+const serverName = 'ROG-2';
+const databaseName = 'ThreeGals';
+let currentItem = null;
+var currentOrder = null;
+
+var usingDatabase = false;
+let usingDatabaseText = localStorage.getItem("usingDatabase");
+if (usingDatabaseText == null)
+{
+  localStorage.setItem("usingDatabase", 'false')
+}
+else if (usingDatabaseText == "true" )
+{
+  usingDatabase = true
+}
 
 const STORAGE_KEYS = {
   cart: 'threeGalsCart',
   order: 'threeGalsOrder'
 };
 
+function displayDatabaseButton()
+{
+  let id = document.getElementById("databaseButton")
+  if ( id != null )
+  {
+    if (usingDatabase )
+    {
+      id.textContent = "Database is On"
+      id.style.backgroundColor="green"
+      id.style.color="white"
+    }
+    else
+    {
+      id.textContent = "Database is Off"
+      id.style.backgroundColor="yellow"
+      id.style.color="black"
+    }
+  }
+}
+
+function initDatabaseButton()
+{
+  let id = document.getElementById("databaseButton")
+  if ( id != null )
+  {    
+    id.addEventListener('click', () => {
+      if (usingDatabase )
+      {
+        usingDatabase = false
+        usingDatabaseText = "false"
+      }
+      else
+      {
+        usingDatabase = true
+        usingDatabaseText = "true"
+      }
+      localStorage.setItem("usingDatabase", usingDatabaseText)
+      displayDatabaseButton();
+    });
+    displayDatabaseButton();
+  }
+}
 async function loadMenu(queryString)
 {
+  // Using Database: all requests go to the database. Response may take time.
   if (usingDatabase)
   {
       const response = await fetch('http://localhost:3000/DatabaseResponse', {
@@ -21,10 +75,12 @@ async function loadMenu(queryString)
     if (!response.ok) {
       throw new Error(`Server error: ${response.status}`);
     }
-    return await response.json(); // JSON from SQL Server
+    let jsonValues = response.json(); // JSON from SQL Server
+    return await jsonValues; // JSON from SQL Server
   }
-  else // Get everything from the json file
+  else // Get everything from the json file. Response depends on specific  request
   {
+    // Collect all the informnation possible
     let jsonData = [];
     let watchingForData = [];
     const response = await fetch('/data/menu.json');
@@ -80,21 +136,67 @@ async function loadMenu(queryString)
       });
       jsonData = watchingForData;
     }
+    // These are specific database requests with no or little resppnse needed.
+    // All this is done by the website.
+    else if ( queryString.startsWith('EXEC MakeNewOrder'))
+    {
+    }
+    else if ( queryString.startsWith('EXEC StartOrder'))
+    {
+    }
+    else if ( queryString.startsWith('EXEC AddMenuItem'))
+    {
+    }
     return jsonData;
   }
 }
 
-async function loadToppings() {
-  try {
-    let menu = await loadMenu('EXEC AllToppings');
-    let toppingsList = menu.map(item => ({
-      id: item.id,
-      name: item.name,
-      price: item.price
-    }));
-    return toppingsList;
-  } catch (error) {
-    return [];
+// Database function to add all items to the database one at a time
+async function addMenuItems(order, number)
+{
+  if (usingDatabase)
+  {
+    insureDatabaseOrder();
+    
+    let listing = order.cart;
+    if ( number < listing.length)
+    {
+      let item = listing[number]
+      let toppings = item.addIns && item.addIns.length ? `${item.addIns.map(a => a.name).join(', ')}` : ''
+      let itemData = `EXEC AddMenuItem ${currentOrder}, '${item.name}', ${item.quantity}, '${toppings}'`
+      let response = await loadMenu(itemData)
+      addMenuItem(order, number+1)
+      currentOrder = null;
+    }
+    else if ( len(listing) > 0)
+    {   
+       let command = `EXEC StartOrder ${currentOrder} ${order.customer.firstName}`
+       let response = await loadMenu(command)
+       let jsonObject = response[0]
+       order.ticket = jsonObject.TicketNumber;
+    }
+  }
+  else
+  {
+      currentOrder = null;
+      order.ticket = 99;
+  }
+}
+// Database fuction to insure there is a currentOrder
+async function insureDatabaseOrder()
+{ 
+  if (usingDatabase)
+  {
+      if (  currentOrder == null)
+      {    
+        let response = await loadMenu('EXEC MakeNewOrder')
+        let jsonObject = response[0];
+        currentOrder = jsonObject.OrderID;
+      }
+  }  
+  else
+  {
+    currentOrder = 1
   }
 }
 
@@ -126,6 +228,123 @@ function ConvertedJson(jsonData) {
      }
 });
   return jsonData
+}
+
+function DecodeOrders(jsonOrders)
+{
+  orderList = []
+  if ( jsonOrders == null || jsonOrders.length == 0 )
+  {
+    return orderList
+  }
+  
+  // Extract the base information that is the same for all orders
+  // orderID, ticket, customerName, dataTime, status, menuName, menuID, toppingID, quantity, total
+  baseModel = jsonOrders[0]
+  toppingsList = []
+  let timeDate = baseModel.data.split(' ')
+  let orderDate = timeDate[0]
+  let orderTime = timeDate[1]
+
+  // Insure there are no spaces in keys (if so, remove any quotes)
+  //    and if found, make a new key without spaces (cause they are hard to work with)
+  jsonOrders.forEach(individualOrder => {
+    forEach( key in individualOrder)
+    {
+      if ( key.find(' ') >= 0 )
+      {
+        let newkey = key.trim()
+        while ( newkey.find(' ') >= 0 )
+        {
+          newkey.replace(" ","")
+        }
+        while ( newkey.find('"') >= 0 )
+        {
+          newkey.replace('"',"")
+        }
+        individualOrder.newkey = individualOrder.key
+      }
+    }  
+  });  
+    
+  // Loop for each order and extract just entries, toppings are used after that
+  jsonOrders.forEach(individualOrder => {
+    if ( individualOrder.menuID > 0)
+    {
+      anOrder = {
+        id : baseModel.id,
+        orderNumber : baseModel.orderNumber,
+        ticket : ticket,
+        customerName : customerName,
+        date : orderDate,
+        time : orderTime,
+        items : [],
+        total : baseModel.total,
+        status : baseModel.status
+      }
+      // Proccess each entre in the order
+      baseModel.items.foreach( individualEntre => {
+        entre = {
+          menuName : individualEntre.menuName,
+          menuID : individualEntre.menuID,
+          toppingID : 0,
+          quantity : individualEntre.quantity,
+          price : individualEntre.price
+        }
+        anOrder.item.append(entre)
+      });
+      orderList.append(anOrder)
+    }
+    // For a topping, save each topping to process after entres
+    else if ( individualOrder.toppingID > 0)
+    {
+      toppingsList.append(individualOrder)
+    }
+  });
+
+  // For each order, match each topping to its entre and add toppings in csv format
+  orderList.forEach(individualOrder => {
+    individualOrder.items.forEach(entre => {
+      let count = 0
+      let topping = ""
+
+      // Once matched, place all toppings into a csv format
+      toppingsList.forEach(individualTopping => {
+        if (entre.menuID == individualTopping.toppingID)
+        {
+          toppingName = ","
+          count += 1;
+          if (count > 1)
+          {
+            toppingName += individualTopping.menuName
+          }
+          else
+          {
+            toppingName = individualTopping.menuName
+          }
+          topping += toppingName
+        }
+      });
+    entre.toppings = "'" + topping + "'"
+    });
+  });
+  return orderList;
+}
+
+ 
+
+async function loadToppings() {
+  try {
+    let menu = await loadMenu('EXEC AllToppings');
+    let toppingsList = menu.map(item => ({
+      id: item.id,
+      name: item.name,
+      price: 0.75 //item.price
+    }));
+    return toppingsList;
+  } catch (error) {
+    return [];
+  }
 }
 function money(value) {
   return `$${value.toFixed(2)}`;
@@ -160,14 +379,23 @@ function needsCustomization(item) {
 function handleAddToCart(item) {
   if (needsCustomization(item)) {
     currentItem = item;
-    const isOnOrderOrDetails = window.location.pathname.includes('order.html') || window.location.pathname.includes('details.html');
-    if (isOnOrderOrDetails) {
+    const useToppingsModal = window.location.pathname.includes('order.html') 
+                          || window.location.pathname.includes('details.html')
+                          || window.location.pathname.includes('index.html');
+    if (useToppingsModal)
+    {
       showToppingsModal(item);
-    } else {
+    }
+    else
+    {
       window.location.href = `toppings.html?id=${item.id}`;
     }
   } else {
     addToCart(item);
+    if (!needsCustomization(item))
+    {
+      showOrderedItemModal(item);
+    }
     //alert(`${item.name} added to bag.`);
   }
 }
@@ -206,11 +434,14 @@ function renderMenuCards(items, container) {
   `).join('');
 }
 
+// Render the home page
 async function initHome() {
   let rawJsonData = await loadMenu('EXEC FeaturedMenu');
   let featured = ConvertedJson(rawJsonData);
   const featuredContainer = document.querySelector('#featured-menu');
   if (!featuredContainer) return;
+
+  // Continue if there is a place for featured items
   renderMenuCards(featured, featuredContainer);
   featuredContainer.querySelectorAll('[data-add-id]').forEach(button => {
     button.addEventListener('click', () => {
@@ -224,7 +455,10 @@ async function initOrder() {
   const rawJsonData = await loadMenu('EXEC FullMenu');
   var menu = ConvertedJson(rawJsonData);
   const container = document.querySelector('#order-menu');
-  if (!container) return;
+  if (!container) 
+  {
+    return;
+  }
 
   const searchInput = document.querySelector('#menu-search');
   const categorySelect = document.querySelector('#menu-category');
@@ -406,6 +640,7 @@ function initCheckout() {
       totals,
       pickupTime: data.pickupTime || 'ASAP'
     };
+    addMenuItems(order, 0)
     localStorage.setItem(STORAGE_KEYS.order, JSON.stringify(order));
     localStorage.removeItem(STORAGE_KEYS.cart);
     window.location.href = 'confirmation.html';
@@ -452,8 +687,7 @@ function initConfirmation() {
       </div>
     `;
     return;
-  }
-
+    }
   target.innerHTML = `
     <div class="notice">Demo flow only. No payment is collected on this website.</div>
     <h2 style="margin-bottom:0;">Thanks, ${order.customer.firstName}.</h2>
@@ -468,8 +702,8 @@ function initConfirmation() {
       <a class="btn btn-secondary" href="index.html">Back home</a>
     </div>
   `;
-}
-
+  }
+  
 function setActiveNav() {
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('[data-nav]').forEach(link => {
@@ -491,7 +725,7 @@ function initToppings() {
     return;
   }
 
-  loadMenu('EXEC AllToppings').then(menu => {
+    loadMenu('EXEC AllToppings').then(menu => {
     const item = menu.find(entry => entry.id === id);
     if (!item) {
       window.location.href = 'order.html';
@@ -581,14 +815,9 @@ function showToppingsModal(item) {
   itemNameEl.textContent = `Customize ${item.name}`;
   itemDescEl.textContent = item.shortDescription;
 
-  // Determine if it's a shake
-  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
-
-  // Load appropriate options based on item type
-  const loadOptions = isShake ? loadMixIns() : loadToppings();
-  
-  loadOptions.then(options => {
-    const title = isShake ? 'Mix-Ins' : 'Toppings';
+  // Load toppings from menu.json for all customizable items
+  loadToppings().then(options => {
+    const title = item.category === 'drinks' ? 'Mix-Ins' : 'Toppings';
 
     container.innerHTML = `
       <h3>${title}</h3>
@@ -629,6 +858,31 @@ function showToppingsModal(item) {
     };
   });
 }
+function showOrderedItemModal(item) {
+  const modal = document.querySelector('#orderedItem-modal'); 
+  const orderedItemName = document.querySelector('#modal-ordered-item-name');
+  const container = document.querySelector('#modal-ordered-container');
+  const okBtn = document.querySelector('#modal-ok');
+  const closeBtn = modal.querySelector('.close');
+
+  if (!modal || !orderedItemName || !container || !closeBtn || !okBtn) return;
+
+  orderedItemName.textContent = `Ordered ${item.name}`;
+  container.innerHTML = `<h3>${item.name} is in the Bag!</h3>`;
+
+  modal.style.display = 'flex';
+
+  const closeModal = () => {
+      modal.style.display = 'none';
+      currentItem = null;
+    };
+
+  closeBtn.onclick = closeModal;
+  okBtn.onclick = closeModal;
+  modal.onclick = (e) => {
+      if (e.target === modal) closeModal();
+  };
+}
 
 function initApp() {
   updateBagCount();
@@ -640,6 +894,7 @@ function initApp() {
   initBag();
   initCheckout();
   initConfirmation();
+  initDatabaseButton();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
