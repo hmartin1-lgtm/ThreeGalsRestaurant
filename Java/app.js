@@ -175,12 +175,12 @@ async function makeNewOrder()
       let response = await loadMenu(command);
       let jsonObject = response[0];
       currentOrder = jsonObject.OrderID;
-      localStorage.setItem("usingCurrentOrder", stringify(currentOrder));
+      localStorage.setItem("usingCurrentOrder", currentOrder.toString());
     }  
     else
     {
       currentOrder = 1
-      localStorage.setItem("usingCurrentOrder", stringify(currentOrder));
+      localStorage.setItem("usingCurrentOrder", currentOrder.toString());
     }
   }
 }
