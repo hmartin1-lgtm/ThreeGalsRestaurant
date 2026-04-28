@@ -1,4 +1,4 @@
-const serverName = `ROG-2`;
+const serverName = 'ROG-2';
 const databaseName = 'ThreeGals';
 let currentItem = null;
 
@@ -842,9 +842,14 @@ function showToppingsModal(item) {
   itemNameEl.textContent = `Customize ${item.name}`;
   itemDescEl.textContent = item.shortDescription;
 
-  // Load toppings from menu.json for all customizable items
-  loadToppings().then(options => {
-    const title = item.category === 'drinks' ? 'Mix-Ins' : 'Toppings';
+  // Determine if it's a shake
+  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
+
+  // Load appropriate options based on item type
+  const loadOptions = isShake ? loadMixIns() : loadToppings();
+  
+  loadOptions.then(options => {
+    const title = isShake ? 'Mix-Ins' : 'Toppings';
 
     container.innerHTML = `
       <h3>${title}</h3>
