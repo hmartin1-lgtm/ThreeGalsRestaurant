@@ -1,7 +1,7 @@
-const serverName = 'ROG-2';
-const databaseName = 'ThreeGals';
-const usingDatabase = false;
-let currentItem = null;
+const serverName = 'HANNAHELISE05'; // Change to your server name if using database connection (and ensure CORS is configured properly on the server)
+const databaseName = 'ThreeGalsDatabase'; // Change to your database name if using database connection
+const usingDatabase = false; // Set to true to enable database connection, false to load from local JSON file
+let currentItem = null; // Store the currently selected item for customization in the modal
 
 const STORAGE_KEYS = {
   cart: 'threeGalsCart',
