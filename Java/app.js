@@ -1,7 +1,19 @@
-const serverName = 'ROG-2';
+const serverName = `ROG-2`;
 const databaseName = 'ThreeGals';
 let currentItem = null;
+
 var currentOrder = null;
+let usingCurrentOrder = localStorage.getItem("usingCurrentOrder");
+if ( usingCurrentOrder != null)
+{
+  try
+  {
+    currentOrder = parseInt(usingCurrentOrder)
+  }
+  catch
+  {
+  }
+}
 
 var usingDatabase = false;
 let usingDatabaseText = localStorage.getItem("usingDatabase");
@@ -150,53 +162,61 @@ async function loadMenu(queryString)
     return jsonData;
   }
 }
+////////////////////////////////////////////////////////
+// Database function to add one item to the database one at a time
+// Database fuction to insure there is a currentOrder
+async function makeNewOrder()
+{ 
+  if ( currentOrder == null )
+  {
+    if (usingDatabase)
+    {
+      let command = 'EXEC MakeNewOrder'
+      let response = await loadMenu(command);
+      let jsonObject = response[0];
+      currentOrder = jsonObject.OrderID;
+      localStorage.setItem("usingCurrentOrder", stringify(currentOrder));
+    }  
+    else
+    {
+      currentOrder = 1
+      localStorage.setItem("usingCurrentOrder", stringify(currentOrder));
+    }
+  }
+}
 
-// Database function to add all items to the database one at a time
-async function addMenuItems(order, number)
+async function addMenuItem(item)
 {
   if (usingDatabase)
   {
-    insureDatabaseOrder();
-    
-    let listing = order.cart;
-    if ( number < listing.length)
+    if (currentOrder == null)
     {
-      let item = listing[number]
-      let toppings = item.addIns && item.addIns.length ? `${item.addIns.map(a => a.name).join(', ')}` : ''
-      let itemData = `EXEC AddMenuItem ${currentOrder}, '${item.name}', ${item.quantity}, '${toppings}'`
-      let response = await loadMenu(itemData)
-      addMenuItem(order, number+1)
-      currentOrder = null;
+      await makeNewOrder();
     }
-    else if ( len(listing) > 0)
-    {   
-       let command = `EXEC StartOrder ${currentOrder} ${order.customer.firstName}`
-       let response = await loadMenu(command)
-       let jsonObject = response[0]
-       order.ticket = jsonObject.TicketNumber;
-    }
-  }
-  else
-  {
-      currentOrder = null;
-      order.ticket = 99;
+    const quantity = Number(item.quantity) > 0 ? Number(item.quantity) : 1;
+    const escapeSqlText = (value) => String(value || '').replace(/'/g, "''");
+    const toppings = item.addIns && item.addIns.length ? item.addIns.map(a => a.name).join(', ') : '';
+    const command = `EXEC AddMenuItem ${currentOrder}, '${escapeSqlText(item.name)}', ${quantity}, '${escapeSqlText(toppings)}'`;
+    return await loadMenu(command);
   }
 }
-// Database fuction to insure there is a currentOrder
-async function insureDatabaseOrder()
-{ 
+async function startOrder(order)
+{
   if (usingDatabase)
   {
-      if (  currentOrder == null)
-      {    
-        let response = await loadMenu('EXEC MakeNewOrder')
-        let jsonObject = response[0];
-        currentOrder = jsonObject.OrderID;
-      }
-  }  
+    let command = `EXEC StartOrder ${currentOrder}, ${order.customer.firstName}`
+    let response = await loadMenu(command)
+    let jsonObject = response[0]
+    let ticket = jsonObject.TicketNumber;
+    currentOrder = null;
+    localStorage.removeItem("usingCurrentOrder");
+    return ticket;
+  }
   else
   {
-    currentOrder = 1
+    currentOrder = null;
+    localStorage.removeItem("usingCurrentOrder");
+    return 99;
   }
 }
 
@@ -331,8 +351,6 @@ function DecodeOrders(jsonOrders)
   return orderList;
 }
 
- 
-
 async function loadToppings() {
   try {
     let menu = await loadMenu('EXEC AllToppings');
@@ -376,8 +394,9 @@ function needsCustomization(item) {
   return item.category === 'burgers' || item.category === 'hot-dogs' || (item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake')));
 }
 
-function handleAddToCart(item) {
+async function handleAddToCart(item) {
   if (needsCustomization(item)) {
+
     currentItem = item;
     const useToppingsModal = window.location.pathname.includes('order.html') 
                           || window.location.pathname.includes('details.html')
@@ -392,6 +411,7 @@ function handleAddToCart(item) {
     }
   } else {
     addToCart(item);
+    await addMenuItem({ ...item, quantity: 1, addIns: [] });
     if (!needsCustomization(item))
     {
       showOrderedItemModal(item);
@@ -444,9 +464,9 @@ async function initHome() {
   // Continue if there is a place for featured items
   renderMenuCards(featured, featuredContainer);
   featuredContainer.querySelectorAll('[data-add-id]').forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       const item = featured.find(entry => entry.id === button.dataset.addId);
-      handleAddToCart(item);
+      await handleAddToCart(item);
     });
   });
 }
@@ -458,6 +478,10 @@ async function initOrder() {
   if (!container) 
   {
     return;
+  }    
+  if ( currentOrder == null)
+  {
+      await makeNewOrder();
   }
 
   const searchInput = document.querySelector('#menu-search');
@@ -475,9 +499,9 @@ async function initOrder() {
         });
         renderMenuCards(filtered, container);
         container.querySelectorAll('[data-add-id]').forEach(button => {
-            button.addEventListener('click', () => {
+          button.addEventListener('click', async () => {
                 const item = menu.find(entry => entry.id === button.dataset.addId);
-                handleAddToCart(item);
+            await handleAddToCart(item);
             });
         });
       }
@@ -514,8 +538,8 @@ async function initDetails() {
     </div>
   `;
 
-  document.querySelector('#detail-add').addEventListener('click', () => {
-    handleAddToCart(item);
+  document.querySelector('#detail-add').addEventListener('click', async () => {
+    await handleAddToCart(item);
   });
 }
 
@@ -629,7 +653,7 @@ function initCheckout() {
     <div class="summary-line"><span class="summary-total">Total</span><span class="summary-total">${money(totals.total)}</span></div>
   `;
 
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(form).entries());
     const orderNumber = `TG-${Date.now().toString().slice(-6)}`;
@@ -640,7 +664,8 @@ function initCheckout() {
       totals,
       pickupTime: data.pickupTime || 'ASAP'
     };
-    addMenuItems(order, 0)
+    let ticket = await startOrder(order);
+    order.ticket = ticket;
     localStorage.setItem(STORAGE_KEYS.order, JSON.stringify(order));
     localStorage.removeItem(STORAGE_KEYS.cart);
     window.location.href = 'confirmation.html';
@@ -756,13 +781,14 @@ function initToppings() {
           </div>
         `;
 
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', async () => {
           const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
             id: cb.dataset.id,
             name: options.find(o => o.id === cb.dataset.id).name,
             price: parseFloat(cb.dataset.price)
           }));
           addToCart(item, 1, selected);
+          await addMenuItem({ ...item, quantity: 1, addIns: selected });
           //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
           window.location.href = 'bag.html';
         });
@@ -786,13 +812,14 @@ function initToppings() {
           </div>
         `;
 
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', async () => {
           const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
             id: cb.dataset.id,
             name: options.find(o => o.id === cb.dataset.id).name,
             price: parseFloat(cb.dataset.price)
           }));
           addToCart(item, 1, selected);
+          await addMenuItem({ ...item, quantity: 1, addIns: selected });
           //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
           window.location.href = 'bag.html';
         });
@@ -846,13 +873,14 @@ function showToppingsModal(item) {
       if (e.target === modal) closeModal();
     };
 
-    addBtn.onclick = () => {
+    addBtn.onclick = async () => {
       const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
         id: cb.dataset.id,
         name: options.find(o => o.id === cb.dataset.id).name,
         price: parseFloat(cb.dataset.price)
       }));
       addToCart(item, 1, selected);
+      await addMenuItem({ ...item, quantity: 1, addIns: selected });
       //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
       closeModal();
     };
