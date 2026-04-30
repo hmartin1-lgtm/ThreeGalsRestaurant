@@ -1,0 +1,125 @@
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--green-50), var(--white));
+    }
+    
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 48px 32px;
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .login-header .brand {
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .login-header h1 {
+      margin: 0 0 8px;
+      font-size: 1.8rem;
+      color: var(--ink);
+    }
+    
+    .login-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--green-900);
+      box-shadow: 0 0 0 3px rgba(17, 77, 44, 0.1);
+    }
+    
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background: var(--green-900);
+      color: var(--white);
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .login-button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .login-button:active {
+      transform: translateY(0);
+    }
+    
+    .error-message {
+      display: none;
+      margin-bottom: 20px;
+      padding: 12px;
+      background: #fee;
+      border: 1px solid #fcc;
+      border-radius: 8px;
+      color: #c00;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    .error-message.show {
+      display: block;
+    }
+ 
+    .cancel-button {
+      width: 6rem;
+      margin-top: 16px;
+      padding: 6px;
+      background: rgb(255, 183, 0);
+      border-radius: 10px;
+      color: rgb(57, 8, 8);
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      float:right;
+    }
+    
+    .cancel-button:hover {
+      transform: none;
+    }
+    
+    .cancel-button:active {
+      transform: none;
+    }
