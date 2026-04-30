@@ -1,5 +1,5 @@
-const serverName = 'ROG-2';
-const databaseName = 'ThreeGals';
+const serverName = 'HANNAHELISE05';
+const databaseName = 'ThreeGalsDatabase';
 let currentItem = null;
 var currentOrder = null;
 
