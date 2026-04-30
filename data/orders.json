@@ -7,8 +7,8 @@
     "date": "2024-04-12",
     "time": "14:30",
     "items": [
-      { "name": "Klassic Kenna Burger", "quantity": 2, "Toppings": "Ketchup,Lettuce", "price": 9.50 },
-      { "name": "Crispy Fries", "quantity": 1, "price": 4.50 }
+      { "menuName": "Klassic Kenna Burger", "quantity": 2, "toppings": "with Ketchup, Lettuce", "price": 9.50 },
+      { "menuName": "Crispy Fries", "quantity": 1, "toppings": "", "price": 4.50 }
     ],
     "total": 23.50,
     "status": "ready"
@@ -21,8 +21,8 @@
     "date": "2024-04-12",
     "time": "15:45",
     "items": [
-      { "name": "PB + Java Burger", "quantity": 1, "price": 9.75 },
-      { "name": "Garden Fresh Salad", "quantity": 1, "price": 8.50 }
+      { "menuName": "PB + Java Burger", "quantity": 1, "toppings": "", "price": 9.75 },
+      { "menuName": "Garden Fresh Salad", "quantity": 1, "toppings": "", "price": 8.50 }
     ],
     "total": 18.25,
     "status": "preparing"
@@ -35,9 +35,9 @@
     "date": "2024-04-11",
     "time": "12:15",
     "items": [
-      { "name": "Klassic Kenna Burger", "quantity": 3, "Toppings":"Lettuce,Pickles,Onions", "price": 9.50 },
-      { "name": "Crispy Fries", "quantity": 2, "price": 4.50 },
-      { "name": "Milkshake", "quantity": 3, "Toppings":"Chocolate Syrup", "price": 6.00 }
+      { "menuName": "Klassic Kenna Burger", "quantity": 3, "toppings":"with Lettuce, Pickles, Onions", "price": 9.50 },
+      { "menuName": "Crispy Fries", "quantity": 2, "toppings": "", "price": 4.50 },
+      { "menuName": "Milkshake", "quantity": 3, "toppings":"Chocolate Syrup", "price": 6.00 }
     ],
     "total": 53.00,
     "status": "completed"
@@ -50,8 +50,8 @@
     "date": "2024-04-11",
     "time": "18:20",
     "items": [
-      { "name": "Spicy Green Burger", "quantity": 1, "Toppings":"Bacon,Avocado", "price": 10.25 },
-      { "name": "Garden Fresh Salad", "quantity": 1, "price": 8.50 }
+      { "menuName": "Spicy Green Burger", "quantity": 1, "toppings":"with Bacon, Avocado", "price": 10.25 },
+      { "menuName": "Garden Fresh Salad", "quantity": 1, "toppings": "", "price": 8.50 }
     ],
     "total": 18.75,
     "status": "ready"
@@ -64,8 +64,8 @@
     "date": "2024-04-10",
     "time": "11:30",
     "items": [
-      { "name": "PB + Java Burger", "quantity": 2, "price": 9.75 },
-      { "name": "Crispy Fries", "quantity": 2, "price": 4.50 }
+      { "menuName": "PB + Java Burger", "quantity": 2, "toppings": "", "price": 9.75 },
+      { "menuName": "Crispy Fries", "quantity": 2, "toppings": "", "price": 4.50 }
     ],
     "total": 28.50,
     "status": "completed"
@@ -78,7 +78,7 @@
     "date": "2024-04-10",
     "time": "16:00",
     "items": [
-      { "name": "Klassic Kenna Burger", "quantity": 1, "price": 9.50, "topping":"Ketchup,Mustard" }
+      { "menuName": "Klassic Kenna Burger", "quantity": 1, "price": 9.50, "topping":"with Ketchup, Mustard" }
     ],
     "total": 9.50,
     "status": "preparing"

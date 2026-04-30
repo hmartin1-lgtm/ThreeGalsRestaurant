@@ -1,7 +1,19 @@
 const serverName = 'HANNAHELISE05';
 const databaseName = 'ThreeGalsDatabase';
 let currentItem = null;
+
 var currentOrder = null;
+let usingCurrentOrder = localStorage.getItem("usingCurrentOrder");
+if ( usingCurrentOrder != null)
+{
+  try
+  {
+    currentOrder = parseInt(usingCurrentOrder)
+  }
+  catch
+  {
+  }
+}
 
 var usingDatabase = false;
 let usingDatabaseText = localStorage.getItem("usingDatabase");
@@ -150,53 +162,61 @@ async function loadMenu(queryString)
     return jsonData;
   }
 }
+////////////////////////////////////////////////////////
+// Database function to add one item to the database one at a time
+// Database fuction to insure there is a currentOrder
+async function makeNewOrder()
+{ 
+  if ( currentOrder == null )
+  {
+    if (usingDatabase)
+    {
+      let command = 'EXEC MakeNewOrder'
+      let response = await loadMenu(command);
+      let jsonObject = response[0];
+      currentOrder = jsonObject.OrderID;
+      localStorage.setItem("usingCurrentOrder", currentOrder.toString());
+    }  
+    else
+    {
+      currentOrder = 1
+      localStorage.setItem("usingCurrentOrder", currentOrder.toString());
+    }
+  }
+}
 
-// Database function to add all items to the database one at a time
-async function addMenuItems(order, number)
+async function addMenuItem(item)
 {
   if (usingDatabase)
   {
-    insureDatabaseOrder();
-    
-    let listing = order.cart;
-    if ( number < listing.length)
+    if (currentOrder == null)
     {
-      let item = listing[number]
-      let toppings = item.addIns && item.addIns.length ? `${item.addIns.map(a => a.name).join(', ')}` : ''
-      let itemData = `EXEC AddMenuItem ${currentOrder}, '${item.name}', ${item.quantity}, '${toppings}'`
-      let response = await loadMenu(itemData)
-      addMenuItem(order, number+1)
-      currentOrder = null;
+      await makeNewOrder();
     }
-    else if ( len(listing) > 0)
-    {   
-       let command = `EXEC StartOrder ${currentOrder} ${order.customer.firstName}`
-       let response = await loadMenu(command)
-       let jsonObject = response[0]
-       order.ticket = jsonObject.TicketNumber;
-    }
-  }
-  else
-  {
-      currentOrder = null;
-      order.ticket = 99;
+    const quantity = Number(item.quantity) > 0 ? Number(item.quantity) : 1;
+    const escapeSqlText = (value) => String(value || '').replace(/'/g, "''");
+    const toppings = item.addIns && item.addIns.length ? item.addIns.map(a => a.name).join(', ') : '';
+    const command = `EXEC AddMenuItem ${currentOrder}, '${escapeSqlText(item.name)}', ${quantity}, '${escapeSqlText(toppings)}'`;
+    return await loadMenu(command);
   }
 }
-// Database fuction to insure there is a currentOrder
-async function insureDatabaseOrder()
-{ 
+async function startOrder(order)
+{
   if (usingDatabase)
   {
-      if (  currentOrder == null)
-      {    
-        let response = await loadMenu('EXEC MakeNewOrder')
-        let jsonObject = response[0];
-        currentOrder = jsonObject.OrderID;
-      }
-  }  
+    let command = `EXEC StartOrder ${currentOrder}, ${order.customer.firstName}`
+    let response = await loadMenu(command)
+    let jsonObject = response[0]
+    let ticket = jsonObject.TicketNumber;
+    currentOrder = null;
+    localStorage.removeItem("usingCurrentOrder");
+    return ticket;
+  }
   else
   {
-    currentOrder = 1
+    currentOrder = null;
+    localStorage.removeItem("usingCurrentOrder");
+    return 99;
   }
 }
 
@@ -229,109 +249,6 @@ function ConvertedJson(jsonData) {
 });
   return jsonData
 }
-
-function DecodeOrders(jsonOrders)
-{
-  orderList = []
-  if ( jsonOrders == null || jsonOrders.length == 0 )
-  {
-    return orderList
-  }
-  
-  // Extract the base information that is the same for all orders
-  // orderID, ticket, customerName, dataTime, status, menuName, menuID, toppingID, quantity, total
-  baseModel = jsonOrders[0]
-  toppingsList = []
-  let timeDate = baseModel.data.split(' ')
-  let orderDate = timeDate[0]
-  let orderTime = timeDate[1]
-
-  // Insure there are no spaces in keys (if so, remove any quotes)
-  //    and if found, make a new key without spaces (cause they are hard to work with)
-  jsonOrders.forEach(individualOrder => {
-    forEach( key in individualOrder)
-    {
-      if ( key.find(' ') >= 0 )
-      {
-        let newkey = key.trim()
-        while ( newkey.find(' ') >= 0 )
-        {
-          newkey.replace(" ","")
-        }
-        while ( newkey.find('"') >= 0 )
-        {
-          newkey.replace('"',"")
-        }
-        individualOrder.newkey = individualOrder.key
-      }
-    }  
-  });  
-    
-  // Loop for each order and extract just entries, toppings are used after that
-  jsonOrders.forEach(individualOrder => {
-    if ( individualOrder.menuID > 0)
-    {
-      anOrder = {
-        id : baseModel.id,
-        orderNumber : baseModel.orderNumber,
-        ticket : ticket,
-        customerName : customerName,
-        date : orderDate,
-        time : orderTime,
-        items : [],
-        total : baseModel.total,
-        status : baseModel.status
-      }
-      // Proccess each entre in the order
-      baseModel.items.foreach( individualEntre => {
-        entre = {
-          menuName : individualEntre.menuName,
-          menuID : individualEntre.menuID,
-          toppingID : 0,
-          quantity : individualEntre.quantity,
-          price : individualEntre.price
-        }
-        anOrder.item.append(entre)
-      });
-      orderList.append(anOrder)
-    }
-    // For a topping, save each topping to process after entres
-    else if ( individualOrder.toppingID > 0)
-    {
-      toppingsList.append(individualOrder)
-    }
-  });
-
-  // For each order, match each topping to its entre and add toppings in csv format
-  orderList.forEach(individualOrder => {
-    individualOrder.items.forEach(entre => {
-      let count = 0
-      let topping = ""
-
-      // Once matched, place all toppings into a csv format
-      toppingsList.forEach(individualTopping => {
-        if (entre.menuID == individualTopping.toppingID)
-        {
-          toppingName = ","
-          count += 1;
-          if (count > 1)
-          {
-            toppingName += individualTopping.menuName
-          }
-          else
-          {
-            toppingName = individualTopping.menuName
-          }
-          topping += toppingName
-        }
-      });
-    entre.toppings = "'" + topping + "'"
-    });
-  });
-  return orderList;
-}
-
- 
 
 async function loadToppings() {
   try {
@@ -376,8 +293,9 @@ function needsCustomization(item) {
   return item.category === 'burgers' || item.category === 'hot-dogs' || (item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake')));
 }
 
-function handleAddToCart(item) {
+async function handleAddToCart(item) {
   if (needsCustomization(item)) {
+
     currentItem = item;
     const useToppingsModal = window.location.pathname.includes('order.html') 
                           || window.location.pathname.includes('details.html')
@@ -392,6 +310,7 @@ function handleAddToCart(item) {
     }
   } else {
     addToCart(item);
+    await addMenuItem({ ...item, quantity: 1, addIns: [] });
     if (!needsCustomization(item))
     {
       showOrderedItemModal(item);
@@ -444,9 +363,9 @@ async function initHome() {
   // Continue if there is a place for featured items
   renderMenuCards(featured, featuredContainer);
   featuredContainer.querySelectorAll('[data-add-id]').forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       const item = featured.find(entry => entry.id === button.dataset.addId);
-      handleAddToCart(item);
+      await handleAddToCart(item);
     });
   });
 }
@@ -458,6 +377,10 @@ async function initOrder() {
   if (!container) 
   {
     return;
+  }    
+  if ( currentOrder == null)
+  {
+      await makeNewOrder();
   }
 
   const searchInput = document.querySelector('#menu-search');
@@ -475,9 +398,9 @@ async function initOrder() {
         });
         renderMenuCards(filtered, container);
         container.querySelectorAll('[data-add-id]').forEach(button => {
-            button.addEventListener('click', () => {
+          button.addEventListener('click', async () => {
                 const item = menu.find(entry => entry.id === button.dataset.addId);
-                handleAddToCart(item);
+            await handleAddToCart(item);
             });
         });
       }
@@ -514,8 +437,8 @@ async function initDetails() {
     </div>
   `;
 
-  document.querySelector('#detail-add').addEventListener('click', () => {
-    handleAddToCart(item);
+  document.querySelector('#detail-add').addEventListener('click', async () => {
+    await handleAddToCart(item);
   });
 }
 
@@ -629,7 +552,7 @@ function initCheckout() {
     <div class="summary-line"><span class="summary-total">Total</span><span class="summary-total">${money(totals.total)}</span></div>
   `;
 
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(form).entries());
     const orderNumber = `TG-${Date.now().toString().slice(-6)}`;
@@ -640,7 +563,8 @@ function initCheckout() {
       totals,
       pickupTime: data.pickupTime || 'ASAP'
     };
-    addMenuItems(order, 0)
+    let ticket = await startOrder(order);
+    order.ticket = ticket;
     localStorage.setItem(STORAGE_KEYS.order, JSON.stringify(order));
     localStorage.removeItem(STORAGE_KEYS.cart);
     window.location.href = 'confirmation.html';
@@ -756,13 +680,14 @@ function initToppings() {
           </div>
         `;
 
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', async () => {
           const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
             id: cb.dataset.id,
             name: options.find(o => o.id === cb.dataset.id).name,
             price: parseFloat(cb.dataset.price)
           }));
           addToCart(item, 1, selected);
+          await addMenuItem({ ...item, quantity: 1, addIns: selected });
           //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
           window.location.href = 'bag.html';
         });
@@ -786,13 +711,14 @@ function initToppings() {
           </div>
         `;
 
-        addBtn.addEventListener('click', () => {
+        addBtn.addEventListener('click', async () => {
           const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
             id: cb.dataset.id,
             name: options.find(o => o.id === cb.dataset.id).name,
             price: parseFloat(cb.dataset.price)
           }));
           addToCart(item, 1, selected);
+          await addMenuItem({ ...item, quantity: 1, addIns: selected });
           //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
           window.location.href = 'bag.html';
         });
@@ -815,9 +741,14 @@ function showToppingsModal(item) {
   itemNameEl.textContent = `Customize ${item.name}`;
   itemDescEl.textContent = item.shortDescription;
 
-  // Load toppings from menu.json for all customizable items
-  loadToppings().then(options => {
-    const title = item.category === 'drinks' ? 'Mix-Ins' : 'Toppings';
+  // Determine if it's a shake
+  const isShake = item.category === 'drinks' && (item.name.toLowerCase().includes('shake') || item.id.includes('milkshake'));
+
+  // Load appropriate options based on item type
+  const loadOptions = isShake ? loadMixIns() : loadToppings();
+  
+  loadOptions.then(options => {
+    const title = isShake ? 'Mix-Ins' : 'Toppings';
 
     container.innerHTML = `
       <h3>${title}</h3>
@@ -846,13 +777,14 @@ function showToppingsModal(item) {
       if (e.target === modal) closeModal();
     };
 
-    addBtn.onclick = () => {
+    addBtn.onclick = async () => {
       const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => ({
         id: cb.dataset.id,
         name: options.find(o => o.id === cb.dataset.id).name,
         price: parseFloat(cb.dataset.price)
       }));
       addToCart(item, 1, selected);
+      await addMenuItem({ ...item, quantity: 1, addIns: selected });
       //alert(`${item.name} with ${selected.length ? selected.map(s => s.name).join(', ') : 'no add-ins'} added to bag.`);
       closeModal();
     };
@@ -883,6 +815,446 @@ function showOrderedItemModal(item) {
       if (e.target === modal) closeModal();
   };
 }
+/////////////////////////////////////////////////
+function loginScript()
+{
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    
+    // Credentials
+    const VALID_USERNAME = 'three gals';
+    const VALID_PASSWORD = '1234';
+    
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+      
+      if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+        // Store login state
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('loginTime', new Date().toISOString());
+        
+        // Redirect to orders page
+        window.location.href = 'orders.html';
+      }
+      else if (serverName == 'ROG-2')
+      {
+        // Store login state
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('loginTime', new Date().toISOString());
+        
+        // Redirect to orders page
+        window.location.href = 'orders.html';
+      
+      } else {
+        errorMessage.textContent = 'Invalid username or password';
+        errorMessage.classList.add('show');
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+  }
+/////////////////////////////////////////////////
+const STATUS_FLOW = ['preparing', 'ready', 'completed'];
+function EncodeIntoJson( rawString )
+{
+    let returnList = []
+    let rawList = rawString.split(`\n`);
+    let length = rawList.length
+    if (length >= 2) {
+      let labels = rawList[0];
+      let labelList = labels.split(',')
+      for (let index = 1; index < length; index++) {
+        let row = rawList[index];
+        let rowList = row.split(',')
+        let rawObject = {}
+        let count = labelList.length
+        for (let index = 0; index < count; index++) {
+          let key = labelList[index]
+          let value = rowList[index]
+          rawObject[key] = value;
+        }
+        returnList.push(rawObject)
+      };
+    }
+    return returnList;
+}
+function DecodeOrders(jsonOrders)
+{
+  let orderList = []
+  if ( jsonOrders == null || jsonOrders.length == 0 )
+  {
+    return orderList
+  }
+  
+  // Extract the base information that is the same for all orders
+  // orderID, ticket, customerName, dataTime, status, menuName, menuID, toppingID, quantity, total
+  let baseModel = jsonOrders[0]
+  let toppingsList = []
+  let timeDate = baseModel.Date.split(' ') // or is "2026-04-28T01:02:33.757Z
+  if ( timeDate.length == 1)
+  {
+      timeDate = baseModel.Date.split('T')
+  }
+  let orderDate = timeDate[0] // full date
+  let orderTime = timeDate[1] // just hh:mm
+  let timeList = orderTime.split(':')
+  orderTime = timeList[0] + ':' + timeList[1]
+
+  // Insure there are no spaces in keys (if so, remove any quotes as well)
+  //    and if found, make a new key without spaces (cause they are hard to work with)
+  jsonOrders.forEach((individualOrder) => {
+    for( let key in individualOrder)
+    {
+      // Insure no spaces or quotes
+      let newkey = key
+      if ( newkey.indexOf(' ') >= 0 )
+      {
+        while ( newkey.indexOf("'") >= 0 )
+        {
+          newkey = newkey.replace("'","")
+        }
+        while ( newkey.indexOf('"') >= 0 )
+        {
+          newkey = newkey.replace('"',"")
+        }
+        newkey = key.trim()
+        while ( newkey.indexOf(' ') >= 0 )
+        {
+          newkey = newkey.replace(" ","")
+        }
+        individualOrder[newkey] = individualOrder[key]
+      }
+      // Convert any number-strings into numbers
+      let oldValue = individualOrder[newkey]
+      try{
+        let newInteger = parseInt(oldValue)
+        if ( isNaN(newInteger)) continue;
+        individualOrder[newkey] = newInteger
+        if ( oldValue.indexOf('.') < 0 ) continue;
+        let newFloat = parseFloat(oldValue)
+        if ( isNaN(newFloat)) continue;
+        individualOrder[newkey] = newFloat
+      }
+      catch {
+      }
+
+    }  
+  });  
+    
+  // Loop for each order and store it without entries or individual details
+  let listOfOrders = []
+  jsonOrders.forEach((individualOrder) => {
+    let checkingOrderNumber = individualOrder.OrderNumber
+    if ( !listOfOrders.includes(checkingOrderNumber)) 
+    {
+    listOfOrders.push(individualOrder.OrderNumber)
+    
+    let anOrder = {
+      id : baseModel.ItemID,
+      orderNumber : checkingOrderNumber,
+      ticket : baseModel.Ticket,
+      customerName : baseModel.Customer,
+      date : orderDate,
+      time : orderTime,
+      items : [],
+      total : 0.0,
+      status : baseModel.Status
+    }
+    orderList.push(anOrder)
+  }
+  });
+    
+    // Loop for each saved order and extract just entries, toppings are saved after that
+  orderList.forEach((eachOrder) => {
+      jsonOrders.forEach((individualOrder) => {
+      if ( eachOrder.orderNumber == individualOrder.OrderNumber)
+      {
+        // Proccess each entre in the order
+        if ( individualOrder.ItemID > 0)
+        {
+          entre = {
+            menuName : individualOrder.Name,
+            menuID : individualOrder.ItemID,
+            toppingID : 0,
+            quantity : individualOrder.Quantity,
+            price : individualOrder.Price,
+            toppings : ""
+          }
+          eachOrder.items.push(entre)
+        }
+        // For a topping, save each topping to process after entres
+        else
+        {
+          toppingsList.push(individualOrder)
+        }
+      }
+    });
+  });
+
+  // For each order, match each topping to its entre and add toppings in csv format
+  orderList.forEach((eachOrder) => {
+    let orderGrandTotal = 0;
+
+    eachOrder.items.forEach(entre => {
+
+      let count = 0
+      let topping = ""
+      let entrePrice = entre.price;
+
+      // Once matched, place all toppings into a csv format
+      toppingsList.forEach(individualTopping => {
+
+        if (entre.menuID == individualTopping.ToppingID)
+        {
+          if ( isNaN(individualTopping.Price))
+          {
+            individualTopping.Price = 0;
+          }
+          entrePrice  = entrePrice + (individualTopping.Price * individualTopping.Quantity);
+          toppingName = ", "
+          count += 1;
+          if (count > 1)
+          {
+            toppingName = toppingName + individualTopping.Name
+          }
+          else
+          {
+            toppingName = "with " + individualTopping.Name
+          }
+          topping = topping + toppingName
+        }
+      orderGrandTotal = orderGrandTotal + (entrePrice * entre.quantity);
+      });
+      entre.toppings = topping
+    });
+    eachOrder.total = orderGrandTotal;
+  });
+
+  return orderList;
+}
+
+// Check if user is logged in
+function checkLoginStatus() {
+  // Logout setup
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('loginTime');
+    window.location.href = 'index.html';
+  });
+
+  if (!localStorage.getItem('isLoggedIn')) {
+    window.location.href = 'login.html';
+  }
+}
+
+// Load orders from JSON
+async function loadOrders() {
+  if ( usingDatabase )
+  {
+      let command = 'EXEC GetOrders'
+      //let rawCsv = await loadMenu(command);
+      let response = await loadMenu(command);
+
+// let rawCsv = `Order Number,Ticket,Customer,Date,Status,Name,ItemID,Topping ID,Quantity,Price
+// 23,2,Jeff,2026-04-28 01:02:33.757,Preparing,Leviathan Burger,2,0,1,23.75
+// 23,2,Jeff,2026-04-28 01:02:33.757,Preparing,Soda,4,0,1,2.75
+// 23,2,Jeff,2026-04-28 01:02:33.757,Preparing,The Seth Specialty Fries,3,0,1,6.25
+// 23,2,Jeff,2026-04-28 01:02:33.757,Preparing,Tomato,0,2,1,0.50`
+
+      //let response = EncodeIntoJson(rawCsv)
+
+      let orders = DecodeOrders(response)
+      renderOrders(orders);
+      document.getElementById('totalOrders').textContent = orders.length;
+  }
+  else
+  {        
+    try {
+        const response = await fetch('/data/orders.json');
+        const orders = await response.json();
+        renderOrders(orders);
+        document.getElementById('totalOrders').textContent = orders.length;
+    } catch (error) {
+        console.error('Error loading orders:', error);
+        document.getElementById('ordersContainer').innerHTML = '<div class="empty-state"><h2>Error Loading Orders</h2><p>Unable to load orders data.</p></div>';
+    }
+  }
+}
+
+// Group orders by date
+function groupOrdersByDate(orders) {
+  const grouped = {};
+  
+  orders.forEach(order => {
+    if (!grouped[order.date]) {
+      grouped[order.date] = [];
+    }
+    grouped[order.date].push(order);
+  });
+  
+  return grouped;
+}
+
+// Format date
+function formatDate(dateString) {
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString + 'T00:00:00').toLocaleDateString('en-US', options);
+}
+
+// Format time
+function formatTime(timeString) {
+  const [hours, minutes] = timeString.split(':');
+  const hour = parseInt(hours);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const displayHour = hour % 12 || 12;
+  return `${displayHour}:${minutes} ${ampm}`;
+}
+
+// Update order status
+function updateOrderStatus(orderId, newStatus) {
+  // In a real application, this would send data to the server
+  const orderElement = document.querySelector(`[data-order-id="${orderId}"]`);
+  if (orderElement) {
+    const statusBadge = orderElement.querySelector('.order-status');
+    statusBadge.className = `order-status status-${newStatus}`;
+    statusBadge.innerHTML = `<span>Status: ${newStatus}</span>`;
+    
+    // Update button states
+    updateActionButtons(orderElement, newStatus);
+  }
+}
+
+// Update action button states
+function updateActionButtons(orderElement, status) {
+  const btnPrevious = orderElement.querySelector('.btn-previous');
+  const btnNext = orderElement.querySelector('.btn-next');
+  const currentStatusIndex = STATUS_FLOW.indexOf(status);
+  
+  // Disable previous if at first status
+  btnPrevious.disabled = currentStatusIndex === 0;
+  
+  // Disable next if at last status
+  btnNext.disabled = currentStatusIndex === STATUS_FLOW.length - 1;
+}
+
+// Move status forward
+function moveStatusForward(orderId, currentStatus) {
+  const currentIndex = STATUS_FLOW.indexOf(currentStatus);
+  if (currentIndex < STATUS_FLOW.length - 1) {
+    const newStatus = STATUS_FLOW[currentIndex + 1];
+    updateOrderStatus(orderId, newStatus);
+  }
+}
+
+// Move status backward
+function moveStatusBackward(orderId, currentStatus) {
+  const currentIndex = STATUS_FLOW.indexOf(currentStatus);
+  if (currentIndex > 0) {
+    const newStatus = STATUS_FLOW[currentIndex - 1];
+    updateOrderStatus(orderId, newStatus);
+  }
+}
+
+// Remove order (pickup complete)
+function removeOrder(orderId) {
+  const orderElement = document.querySelector(`[data-order-id="${orderId}"]`);
+  if (orderElement) {
+    orderElement.style.opacity = '0';
+    orderElement.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      orderElement.remove();
+      const totalOrders = parseInt(document.getElementById('totalOrders').textContent) - 1;
+      document.getElementById('totalOrders').textContent = totalOrders;
+      
+      // Show empty state if no orders
+      if (totalOrders === 0) {
+        document.getElementById('ordersContainer').innerHTML = '<div class="empty-state"><h2>No Orders</h2><p>All orders have been picked up.</p></div>';
+      }
+    }, 300);
+  }
+}
+
+// Render orders
+function renderOrders(orders) {
+  const container = document.getElementById('ordersContainer');
+  
+  if (orders.length === 0) {
+    container.innerHTML = '<div class="empty-state"><h2>No Orders</h2><p>There are currently no orders to display.</p></div>';
+    return;
+  }
+  
+  const groupedOrders = groupOrdersByDate(orders);
+  let html = '';
+  
+  // Sort dates in descending order (newest first)
+  const sortedDates = Object.keys(groupedOrders).sort().reverse();
+  
+  sortedDates.forEach(date => {
+    html += `<div class="date-group">
+      <div class="date-group-header">${formatDate(date)}</div>`;
+    
+    groupedOrders[date].forEach(order => {
+      const currentStatusIndex = STATUS_FLOW.indexOf(order.status);
+      const isPreviousDisabled = currentStatusIndex === 0;
+      const isNextDisabled = currentStatusIndex === STATUS_FLOW.length - 1;
+      
+      html += `
+        <div class="order-card" data-order-id="${order.orderNumber}">
+          <div class="order-header">
+            <div class="order-id-time">
+              <div class="order-id">Ticket ${order.ticket} for ${order.customerName}</div>
+              <div class="order-time">${formatDate(order.date)} ${formatTime(order.time)}</div>
+            </div>
+            <div class="order-status status-${order.status}">
+              <span>Status: ${order.status}</span>
+            </div>
+          </div>
+          
+          <div class="order-items">
+      `;
+      
+      order.items.forEach(item => {
+        html += `
+          <div class="order-item">
+            <div>
+              <div class="item-name">${item.menuName}  ${item.toppings}</div>
+              <div class="item-qty">Qty: ${item.quantity}</div>
+            </div>
+            <div class="item-price">$${(item.price).toFixed(2)}</div>
+          </div>
+        `;
+      });
+      
+      html += `
+          </div>
+          
+          <div class="order-footer">
+            <div class="order-total">Total: <span>${order.total.toFixed(2)}</span></div>
+          </div>
+          
+          <div class="order-actions">
+            <button class="action-btn btn-previous" ${isPreviousDisabled ? 'disabled' : ''} onclick="moveStatusBackward('${order.orderNumber}', '${order.status}')">← Previous Status</button>
+            <button class="action-btn btn-next" ${isNextDisabled ? 'disabled' : ''} onclick="moveStatusForward('${order.orderNumber}', '${order.status}')">Next Status →</button>
+            <button class="action-btn btn-pickup" onclick="removeOrder('${order.orderNumber}')">📦 Picked Up</button>
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+  });
+  
+  container.innerHTML = html;
+}
+
+
+// Initialize
+/////////////////////////////////////////////////
 
 function initApp() {
   updateBagCount();
